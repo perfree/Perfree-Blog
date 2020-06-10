@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.perfree.mapper.UserMapper" >
+    <!-- 定义基础列 -->
+    <sql id="BASE_COLUMN">
+        t.id id,
+        t.`name` name,
+        t.age age,
+        t.sex sex,
+        t.salt salt,
+        t.`status` status,
+        t.`password` password,
+        t.email email,
+        t.account account,
+        t.createTime createTime,
+        t.updateTime updateTime
+    </sql>
+
+    <!-- 定义组装的User列 -->
+    <resultMap id="user_map" type="com.perfree.model.User">
+        <result column="id" property="id"></result>
+        <result column="name" property="name"></result>
+        <result column="age" property="age"></result>
+        <result column="sex" property="sex"></result>
+        <result column="salt" property="salt"></result>
+        <result column="status" property="status"></result>
+        <result column="password" property="password"></result>
+        <result column="email" property="email"></result>
+        <result column="account" property="account"></result>
+        <result column="createTime" property="createTime"></result>
+        <result column="updateTime" property="updateTime"></result>
+        <collection property="roles" select="getUserRolesByUserId" column="id"></collection>
+    </resultMap>
+
+    <!-- 定义角色map -->
+    <resultMap id="role_map" type="com.perfree.model.Role">
+        <id property="id" column="id"></id>
+        <result property="roleCode" column="roleCode"></result>
+        <result property="roleName" column="roleName"></result>
+        <collection property="permissions" select="getPermissionsByRoleId" column="id"></collection>
+    </resultMap>
+
+    <!-- 定义权限map -->
+    <resultMap id="permission_map" type="com.perfree.model.Permission">
+        <id property="id" column="id"></id>
+        <result property="permissionName" column="permissionName"></result>
+        <result property="permissionCode" column="permissionCode"></result>
+        <result property="permissionType" column="permissionType"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="updateTime" column="updateTime"></result>
+    </resultMap>
+
+    <!-- 根据账户查询用户信息 -->
+    <select id="getUserByAccount" parameterType="string" resultMap="user_map">
+        select t.* from t_user t where t.account = #{account}
+    </select>
+
+    <!-- 根据用户id查询角色信息 -->
+    <select id="getUserRolesByUserId" parameterType="string" resultMap="role_map">
+        select t.* from t_role t LEFT JOIN t_user_role t1 on t.id = t1.roleId WHERE t1.userId = #{id}
+    </select>
+
+    <!-- 根据角色id查询权限信息 -->
+    <select id="getPermissionsByRoleId" parameterType="string" resultMap="permission_map">
+        select t.* from t_permission t LEFT JOIN t_role_permission t1 on t.id = t1.permissionId WHERE t1.roleId = #{id}
+    </select>
+
+    <!-- 用户列表分页 -->
+    <select id="list" parameterType="com.perfree.model.User" resultType="com.perfree.model.User">
+        select t.* from t_user t where 1 = 1
+        <if test="name !=null and name !=''">
+            and t.name like concat(concat('%',#{name}),'%')
+        </if>
+        <if test="account !=null and account !=''">
+            and t.account like concat(concat('%',#{account}),'%')
+        </if>
+        <if test="email !=null and email !=''">
+            and t.email like concat(concat('%',#{email}),'%')
+        </if>
+        <if test="status !=null and status !=''">
+            and t.status = #{status}
+        </if>
+    </select>
+</mapper>

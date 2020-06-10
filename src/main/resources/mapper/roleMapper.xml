@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.perfree.mapper.RoleMapper" >
+
+    <!-- 权限列表分页 -->
+    <select id="list" parameterType="com.perfree.model.Role" resultType="com.perfree.model.Role">
+        select t.* from t_role t where 1 = 1
+        <if test="roleName !=null and roleName !=''">
+            and t.roleName like concat(concat('%',#{roleName}),'%')
+        </if>
+    </select>
+</mapper>
