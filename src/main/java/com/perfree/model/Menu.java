@@ -29,6 +29,26 @@ public class Menu implements Serializable {
     private Date createTime;
     // 更新时间
     private Date updateTime;
+    // 来源:0默认.1用户添加
+    private Integer source;
+    // 状态:0可用,1禁用
+    private Integer status;
+
+    public Integer getSource() {
+        return source;
+    }
+
+    public void setSource(Integer source) {
+        this.source = source;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     // 子菜单
     private List<Menu> childMenu;

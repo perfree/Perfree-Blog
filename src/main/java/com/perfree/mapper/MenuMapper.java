@@ -14,4 +14,11 @@ public interface MenuMapper {
      * @return List<Menu>
      */
     List<Menu> getMenuByAccount(String account);
+
+    /**
+     * 菜单列表分页
+     * @param menu 信息
+     * @return List<Menu>
+     */
+    List<Menu> list(Menu menu);
 }

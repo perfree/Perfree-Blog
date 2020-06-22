@@ -14,7 +14,7 @@
         <result property="target" column="target"></result>
         <result property="createTime" column="createTime"></result>
         <result property="updateTime" column="updateTime"></result>
-        <collection property="childMenu" select="getChildMenu" column="id"></collection>
+        <collection property="childMenu" select="getChildMenuByAccount" column="id"></collection>
     </resultMap>
 
     <!-- 获取当前账户所拥有的菜单 -->
@@ -24,11 +24,39 @@
         LEFT JOIN t_role_permission t2 on t1.permissionId = t2.permissionId
         LEFT JOIN t_user_role t3 on t2.roleId = t3.roleId
         LEFT JOIN t_user t4 on t3.userId = t4.id
-        where t4.account= #{account} and t.pid = -1
+        where t4.account= #{account} and t.pid = -1 and t.status = 0
+         order by t.seq asc
     </select>
 
     <!-- 获取当前账户所拥有的子菜单 -->
-    <select id="getChildMenu" parameterType="long" resultMap="CURR_USER_MENU">
-        SELECT t.* from t_menu t WHERE t.pid = #{id}
+    <select id="getChildMenuByAccount" parameterType="long" resultMap="CURR_USER_MENU">
+        SELECT t.* from t_menu t
+        WHERE  t.pid = #{id} and t.status = 0
+    </select>
+
+    <!-- 定义菜单树形结构 -->
+    <resultMap id="TEMPLATE_TREE" type="com.perfree.model.Menu">
+        <id property="id" column="id"></id>
+        <result property="menuName" column="menuName"></result>
+        <result property="menuIcon" column="menuIcon"></result>
+        <result property="menuPath" column="menuPath"></result>
+        <result property="pid" column="pid"></result>
+        <result property="seq" column="seq"></result>
+        <result property="flag" column="flag"></result>
+        <result property="target" column="target"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="updateTime" column="updateTime"></result>
+        <collection property="childMenu" select="getChildMenu" column="id"></collection>
+    </resultMap>
+
+    <!-- 菜单列表 -->
+    <select id="list" resultMap="TEMPLATE_TREE" parameterType="long">
+        SELECT t.* from t_menu t
+        order by t.seq asc
+    </select>
+
+    <!-- 获取子菜单 -->
+    <select id="getChildMenu" resultMap="TEMPLATE_TREE" parameterType="com.perfree.model.Menu">
+        SELECT t.* from t_menu t  WHERE  t.pid = #{id}
     </select>
 </mapper>
