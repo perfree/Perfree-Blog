@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 18/06/2020 13:57:38
+ Date: 22/06/2020 17:04:56
 */
 
 SET NAMES utf8mb4;
@@ -28,17 +28,20 @@ CREATE TABLE `t_menu`  (
   `menuPath` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单路径url',
   `pid` int(11) NOT NULL DEFAULT -1 COMMENT '父菜单id，若为-1则为父菜单',
   `seq` int(64) NOT NULL COMMENT '菜单序号',
-  `flag` int(11) NOT NULL COMMENT '菜单标识0：后台，1：前台',
-  `target` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单打开方式',
+  `type` int(11) NOT NULL COMMENT '菜单类型0：后台，1：前台',
+  `target` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单打开方式',
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `source` int(1) NOT NULL COMMENT '来源:0默认.1用户添加',
+  `status` int(1) NOT NULL COMMENT '状态:0可用,1禁用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_menu
 -- ----------------------------
-INSERT INTO `t_menu` VALUES (1, '控制台', 'line-chart', '/admin/console', -1, 1, 1, NULL, '2020-04-10 16:10:17', '2020-04-10 16:10:18');
+INSERT INTO `t_menu` VALUES (1, '控制台', 'line-chart', '/admin/console', -1, 1, 0, NULL, '2020-04-10 16:10:17', '2020-04-10 16:10:18', 0, 0);
+INSERT INTO `t_menu` VALUES (2, '菜单管理', 'menu', '/admin/menus', -1, 2, 0, NULL, '2020-06-22 10:27:39', '2020-06-22 10:27:42', 0, 0);
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -58,6 +61,7 @@ CREATE TABLE `t_permission`  (
 -- Records of t_permission
 -- ----------------------------
 INSERT INTO `t_permission` VALUES (1, '控制台访问权限', 'system:console:read', '1', '2020-04-11 14:26:21', '2020-04-11 14:26:24');
+INSERT INTO `t_permission` VALUES (2, '后台菜单管理', 'admin:menu:read', '1', '2020-06-22 10:29:31', '2020-06-22 10:29:33');
 
 -- ----------------------------
 -- Table structure for t_permission_menu
@@ -72,6 +76,7 @@ CREATE TABLE `t_permission_menu`  (
 -- Records of t_permission_menu
 -- ----------------------------
 INSERT INTO `t_permission_menu` VALUES (1, 1);
+INSERT INTO `t_permission_menu` VALUES (2, 2);
 
 -- ----------------------------
 -- Table structure for t_role
@@ -104,6 +109,7 @@ CREATE TABLE `t_role_permission`  (
 -- Records of t_role_permission
 -- ----------------------------
 INSERT INTO `t_role_permission` VALUES (1, 1);
+INSERT INTO `t_role_permission` VALUES (1, 2);
 
 -- ----------------------------
 -- Table structure for t_user
