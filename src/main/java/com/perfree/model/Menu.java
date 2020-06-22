@@ -22,7 +22,7 @@ public class Menu implements Serializable {
     // 序号
     private Integer seq;
     // 菜单标识0：后台，1：前台
-    private Integer flag;
+    private Integer type;
     // 菜单打开方式
     private String target;
     // 创建时间
@@ -109,12 +109,12 @@ public class Menu implements Serializable {
         this.seq = seq;
     }
 
-    public Integer getFlag() {
-        return flag;
+    public Integer getType() {
+        return type;
     }
 
-    public void setFlag(Integer flag) {
-        this.flag = flag;
+    public void setType(Integer flag) {
+        this.type = flag;
     }
 
     public String getTarget() {

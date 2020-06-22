@@ -3,11 +3,13 @@ package com.perfree.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
+import com.perfree.common.ResponseBean;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,8 +22,13 @@ public class MenuService {
      * @param account 账户
      * @return List<Menu>
      */
-    public List<Menu> getMenuByAccount(String account){
-        return menuMapper.getMenuByAccount(account);
+    public List<Menu> getMenuByAccount(String account, int type){
+        List<Menu> menus = menuMapper.getParentMenuByAccount(account, type);
+        for (Menu menu:menus) {
+            List<Menu> childMenus = menuMapper.getChildMenuByAccount(account, menu.getId(), type);
+            menu.setChildMenu(childMenus);
+        }
+        return menus;
     }
 
     /**
@@ -38,5 +45,49 @@ public class MenuService {
         pager.setTotal(pageInfo.getTotal());
         pager.setData(pageInfo.getList());
         return pager;
+    }
+
+    /**
+     * 添加菜单
+     * @param menu 菜单信息
+     * @return ResponseBean
+     */
+    public ResponseBean add(Menu menu) {
+        menu.setSource(1);
+        menu.setStatus(0);
+        menu.setCreateTime(new Date());
+        menu.setUpdateTime(new Date());
+        int count = menuMapper.add(menu);
+        if (count > 0){
+            return new ResponseBean(200,"添加成功",null);
+        }
+        return new ResponseBean(500,"添加失败",null);
+    }
+
+    /**
+     * 删除菜单
+     * @param id id
+     * @return ResponseBean
+     */
+    public ResponseBean deleteMenu(Integer id) {
+        menuMapper.deleteChildMenu(id);
+        int count = menuMapper.deleteMenu(id);
+        if (count > 0) {
+            return new ResponseBean(200, "删除成功", null);
+        }
+        return new ResponseBean(500,"删除失败",null);
+    }
+
+    /**
+     * 更新状态
+     * @param menu 菜单
+     * @return ResponseBean
+     */
+    public ResponseBean updateStatus(Menu menu) {
+        int count = menuMapper.updateStatus(menu);
+        if (count > 0) {
+            return new ResponseBean(200, "更新成功", null);
+        }
+        return new ResponseBean(500,"更新失败",null);
     }
 }

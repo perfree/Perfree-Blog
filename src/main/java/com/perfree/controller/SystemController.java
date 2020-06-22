@@ -67,14 +67,24 @@ public class SystemController extends BaseController {
         return new ResponseBean(200, "用户信息", user);
     }
 
-    @ApiOperation(value = "获取用户菜单信息", notes = "获取当前登录的用户所拥有的菜单信息")
-    @GetMapping("/getMenuByAccount")
-    public ResponseBean getMenuByAccount(){
+    @ApiOperation(value = "获取用户后台菜单信息", notes = "获取当前登录的用户所拥有的后台菜单信息")
+    @GetMapping("/getAdminMenuByAccount")
+    public ResponseBean getAdminMenuByAccount(){
         Subject subject = SecurityUtils.getSubject();
         String token = subject.getPrincipals().getPrimaryPrincipal().toString();
         String account = JwtUtil.getUsername(token);
-        List<Menu> menuByAccount = menuService.getMenuByAccount(account);
-        return new ResponseBean(200, "菜单信息", menuByAccount);
+        List<Menu> menuByAccount = menuService.getMenuByAccount(account, 0);
+        return new ResponseBean(200, "后台菜单信息", menuByAccount);
+    }
+
+    @ApiOperation(value = "获取用户前台菜单信息", notes = "获取当前登录的用户所拥有的前台菜单信息")
+    @GetMapping("/getPortalMenuByAccount")
+    public ResponseBean getPortalMenuByAccount(){
+        Subject subject = SecurityUtils.getSubject();
+        String token = subject.getPrincipals().getPrimaryPrincipal().toString();
+        String account = JwtUtil.getUsername(token);
+        List<Menu> menuByAccount = menuService.getMenuByAccount(account, 1);
+        return new ResponseBean(200, "前台菜单信息", menuByAccount);
     }
 
     public static void main(String[] args) {

@@ -1,37 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.MenuMapper" >
-
-    <!-- 定义获取用户菜单的map -->
-    <resultMap id="CURR_USER_MENU" type="com.perfree.model.Menu">
-        <id property="id" column="id"></id>
-        <result property="menuName" column="menuName"></result>
-        <result property="menuIcon" column="menuIcon"></result>
-        <result property="menuPath" column="menuPath"></result>
-        <result property="pid" column="pid"></result>
-        <result property="seq" column="seq"></result>
-        <result property="flag" column="flag"></result>
-        <result property="target" column="target"></result>
-        <result property="createTime" column="createTime"></result>
-        <result property="updateTime" column="updateTime"></result>
-        <collection property="childMenu" select="getChildMenuByAccount" column="id"></collection>
-    </resultMap>
-
     <!-- 获取当前账户所拥有的菜单 -->
-    <select id="getMenuByAccount" parameterType="string" resultMap="CURR_USER_MENU">
+    <select id="getParentMenuByAccount" resultType="com.perfree.model.Menu">
         SELECT distinct t.* from t_menu t
         LEFT JOIN t_permission_menu t1 on t.id = t1.menuId
         LEFT JOIN t_role_permission t2 on t1.permissionId = t2.permissionId
         LEFT JOIN t_user_role t3 on t2.roleId = t3.roleId
         LEFT JOIN t_user t4 on t3.userId = t4.id
-        where t4.account= #{account} and t.pid = -1 and t.status = 0
+        where t4.account= #{account} and t.pid = -1 and t.status = 0 and t.type = #{type}
          order by t.seq asc
     </select>
 
     <!-- 获取当前账户所拥有的子菜单 -->
-    <select id="getChildMenuByAccount" parameterType="long" resultMap="CURR_USER_MENU">
+    <select id="getChildMenuByAccount" resultType="com.perfree.model.Menu">
         SELECT t.* from t_menu t
-        WHERE  t.pid = #{id} and t.status = 0
+         LEFT JOIN t_permission_menu t1 on t.id = t1.menuId
+        LEFT JOIN t_role_permission t2 on t1.permissionId = t2.permissionId
+        LEFT JOIN t_user_role t3 on t2.roleId = t3.roleId
+        LEFT JOIN t_user t4 on t3.userId = t4.id
+        WHERE  t.pid = #{pid} and t.status = 0 and t4.account= #{account} and t.type = #{type}
+          order by t.seq asc
     </select>
 
     <!-- 定义菜单树形结构 -->
@@ -50,13 +39,43 @@
     </resultMap>
 
     <!-- 菜单列表 -->
-    <select id="list" resultMap="TEMPLATE_TREE" parameterType="long">
-        SELECT t.* from t_menu t
+    <select id="list" resultMap="TEMPLATE_TREE" parameterType="com.perfree.model.Menu">
+        SELECT t.* from t_menu t where t.pid = -1
+        <if test="type != null and type != ''">
+            and t.type = #{type}
+        </if>
+        <if test="menuName != null and menuName != ''">
+            and t.menuName like concat('%',#{menuName},'%')
+        </if>
         order by t.seq asc
     </select>
 
     <!-- 获取子菜单 -->
-    <select id="getChildMenu" resultMap="TEMPLATE_TREE" parameterType="com.perfree.model.Menu">
-        SELECT t.* from t_menu t  WHERE  t.pid = #{id}
+    <select id="getChildMenu" resultMap="TEMPLATE_TREE" parameterType="long">
+        SELECT t.* from t_menu t  WHERE t.pid = #{id} order by t.seq asc
     </select>
+
+    <!-- 添加菜单 -->
+    <insert id="add" parameterType="com.perfree.model.Menu">
+        INSERT INTO t_menu (menuName, menuIcon,menuPath,pid,seq,type,target,createTime,updateTime,source,status)
+                       VALUES
+                       (#{menuName}, #{menuIcon}, #{menuPath}, #{pid}, #{seq}, #{type}, #{target},
+                       #{createTime}, #{updateTime}, #{source}, #{status})
+    </insert>
+
+    <!-- 删除子菜单 -->
+    <delete id="deleteChildMenu" parameterType="integer">
+        delete from t_menu where pid = #{pid}
+    </delete>
+
+    <!-- 删除菜单 -->
+    <delete id="deleteMenu" parameterType="integer">
+         delete from t_menu where id = #{id}
+    </delete>
+
+    <!-- 更新状态 -->
+    <update id="updateStatus" parameterType="com.perfree.model.Menu">
+        UPDATE t_menu SET status = #{status}
+        where id = #{id}
+    </update>
 </mapper>
