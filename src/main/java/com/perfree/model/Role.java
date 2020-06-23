@@ -31,14 +31,14 @@ public class Role implements Serializable {
         this.updateTime = updateTime;
     }
 
-    private List<Permission> permissions;
+    private List<Menu> menus;
 
-    public List<Permission> getPermissions() {
-        return permissions;
+    public List<Menu> getMenus() {
+        return menus;
     }
 
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 
     public Integer getId() {

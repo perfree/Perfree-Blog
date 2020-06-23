@@ -4,8 +4,7 @@
     <!-- 获取当前账户所拥有的菜单 -->
     <select id="getParentMenuByAccount" resultType="com.perfree.model.Menu">
         SELECT distinct t.* from t_menu t
-        LEFT JOIN t_permission_menu t1 on t.id = t1.menuId
-        LEFT JOIN t_role_permission t2 on t1.permissionId = t2.permissionId
+        LEFT JOIN t_role_menu t2 on t.id = t2.menuId
         LEFT JOIN t_user_role t3 on t2.roleId = t3.roleId
         LEFT JOIN t_user t4 on t3.userId = t4.id
         where t4.account= #{account} and t.pid = -1 and t.status = 0 and t.type = #{type}
@@ -15,8 +14,7 @@
     <!-- 获取当前账户所拥有的子菜单 -->
     <select id="getChildMenuByAccount" resultType="com.perfree.model.Menu">
         SELECT t.* from t_menu t
-         LEFT JOIN t_permission_menu t1 on t.id = t1.menuId
-        LEFT JOIN t_role_permission t2 on t1.permissionId = t2.permissionId
+        LEFT JOIN t_role_menu t2 on t.id = t2.menuId
         LEFT JOIN t_user_role t3 on t2.roleId = t3.roleId
         LEFT JOIN t_user t4 on t3.userId = t4.id
         WHERE  t.pid = #{pid} and t.status = 0 and t4.account= #{account} and t.type = #{type}
