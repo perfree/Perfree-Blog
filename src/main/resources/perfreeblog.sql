@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 22/06/2020 17:04:56
+ Date: 23/06/2020 08:42:39
 */
 
 SET NAMES utf8mb4;
@@ -44,41 +44,6 @@ INSERT INTO `t_menu` VALUES (1, '控制台', 'line-chart', '/admin/console', -1,
 INSERT INTO `t_menu` VALUES (2, '菜单管理', 'menu', '/admin/menus', -1, 2, 0, NULL, '2020-06-22 10:27:39', '2020-06-22 10:27:42', 0, 0);
 
 -- ----------------------------
--- Table structure for t_permission
--- ----------------------------
-DROP TABLE IF EXISTS `t_permission`;
-CREATE TABLE `t_permission`  (
-  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `permissionName` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '权限名',
-  `permissionCode` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '权限代码',
-  `permissionType` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '权限类型',
-  `createTime` datetime(0) NOT NULL COMMENT '创建时间',
-  `updateTime` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_permission
--- ----------------------------
-INSERT INTO `t_permission` VALUES (1, '控制台访问权限', 'system:console:read', '1', '2020-04-11 14:26:21', '2020-04-11 14:26:24');
-INSERT INTO `t_permission` VALUES (2, '后台菜单管理', 'admin:menu:read', '1', '2020-06-22 10:29:31', '2020-06-22 10:29:33');
-
--- ----------------------------
--- Table structure for t_permission_menu
--- ----------------------------
-DROP TABLE IF EXISTS `t_permission_menu`;
-CREATE TABLE `t_permission_menu`  (
-  `permissionId` int(11) NOT NULL COMMENT '权限主键',
-  `menuId` int(11) NULL DEFAULT NULL COMMENT '菜单id'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_permission_menu
--- ----------------------------
-INSERT INTO `t_permission_menu` VALUES (1, 1);
-INSERT INTO `t_permission_menu` VALUES (2, 2);
-
--- ----------------------------
 -- Table structure for t_role
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role`;
@@ -97,19 +62,19 @@ CREATE TABLE `t_role`  (
 INSERT INTO `t_role` VALUES (1, '超级管理员', 'admin', '2020-04-13 09:34:42', '2020-04-13 09:34:35');
 
 -- ----------------------------
--- Table structure for t_role_permission
+-- Table structure for t_role_menu
 -- ----------------------------
-DROP TABLE IF EXISTS `t_role_permission`;
-CREATE TABLE `t_role_permission`  (
+DROP TABLE IF EXISTS `t_role_menu`;
+CREATE TABLE `t_role_menu`  (
   `roleId` int(11) NOT NULL COMMENT '角色id',
-  `permissionId` int(11) NOT NULL COMMENT '菜单id'
+  `menuId` int(11) NOT NULL COMMENT '菜单id'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of t_role_permission
+-- Records of t_role_menu
 -- ----------------------------
-INSERT INTO `t_role_permission` VALUES (1, 1);
-INSERT INTO `t_role_permission` VALUES (1, 2);
+INSERT INTO `t_role_menu` VALUES (1, 1);
+INSERT INTO `t_role_menu` VALUES (1, 2);
 
 -- ----------------------------
 -- Table structure for t_user
