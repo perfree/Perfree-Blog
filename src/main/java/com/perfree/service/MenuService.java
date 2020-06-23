@@ -90,4 +90,18 @@ public class MenuService {
         }
         return new ResponseBean(500,"更新失败",null);
     }
+
+    /**
+     * 更新信息
+     * @param menu 菜单
+     * @return ResponseBean
+     */
+    public ResponseBean update(Menu menu) {
+        menu.setUpdateTime(new Date());
+        int count = menuMapper.update(menu);
+        if (count > 0) {
+            return new ResponseBean(200, "更新成功", null);
+        }
+        return new ResponseBean(500,"更新失败",null);
+    }
 }

@@ -76,4 +76,27 @@
         UPDATE t_menu SET status = #{status}
         where id = #{id}
     </update>
+
+    <!-- 更新信息 -->
+    <update id="update" parameterType="com.perfree.model.Menu">
+        UPDATE t_menu SET
+        menuName = #{menuName},
+        <if test="menuIcon != null and menuIcon != ''">
+            menuIcon = #{menuIcon},
+        </if>
+        <if test="menuPath != null and menuPath != ''">
+            menuPath = #{menuPath},
+        </if>
+        <if test="seq != null and seq != ''">
+            seq = #{seq},
+        </if>
+        <if test="type != null and type != ''">
+            type = #{type},
+        </if>
+        <if test="target != null and target != ''">
+            target = #{target},
+        </if>
+        updateTime = #{updateTime}
+        where id = #{id}
+    </update>
 </mapper>

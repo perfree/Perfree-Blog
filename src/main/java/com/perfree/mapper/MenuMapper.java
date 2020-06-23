@@ -58,4 +58,11 @@ public interface MenuMapper {
      * @return int
      */
     int updateStatus(Menu menu);
+
+    /**
+     * 更新信息
+     * @param menu 菜单
+     * @return int
+     */
+    int update(Menu menu);
 }

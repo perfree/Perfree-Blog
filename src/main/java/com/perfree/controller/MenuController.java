@@ -41,4 +41,10 @@ public class MenuController extends BaseController {
     public ResponseBean updateStatus(@RequestBody Menu menu){
         return menuService.updateStatus(menu);
     }
+
+    @ApiOperation(value = "更新信息", notes = "更新信息")
+    @PutMapping("/update")
+    public ResponseBean update(@RequestBody Menu menu){
+        return menuService.update(menu);
+    }
 }
