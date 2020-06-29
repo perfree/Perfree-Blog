@@ -1,4 +1,4 @@
-package com.perfree.common;
+package com.perfree.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;

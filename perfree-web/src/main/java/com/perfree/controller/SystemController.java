@@ -1,28 +1,28 @@
 package com.perfree.controller;
 
-import com.perfree.common.JwtUtil;
 import com.perfree.common.ResponseBean;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
 import com.perfree.service.MenuService;
 import com.perfree.service.UserService;
+import com.perfree.util.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
  * 系统级Controller，用于处理登录，获取菜单等操作
  */
 @Api(tags = "系统级处理接口")
-@RestController
+@Controller
 @CrossOrigin
 public class SystemController extends BaseController {
 
@@ -34,6 +34,7 @@ public class SystemController extends BaseController {
 
     @ApiOperation(value = "登录接口", notes = "传入用户名及密码，返回token")
     @PostMapping("/login")
+    @ResponseBody
     public ResponseBean login(@RequestBody User user) {
         User userBean = userService.getUserByAccount(user.getAccount());
         if (userBean == null || StringUtils.isBlank(userBean.getAccount())){
@@ -50,6 +51,7 @@ public class SystemController extends BaseController {
 
     @GetMapping(path = "/401/{message}")
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
     public ResponseBean unauthorized(@PathVariable String message) {
         if (StringUtils.isNotBlank(message)){
             return new ResponseBean(401, message, null);
@@ -59,8 +61,9 @@ public class SystemController extends BaseController {
 
     @ApiOperation(value = "获取用户信息", notes = "获取当前登录的用户信息")
     @GetMapping("/getUserInfo")
-    public ResponseBean getUserInfo(){
-        User user = getUser();
+    @ResponseBody
+    public ResponseBean getUserInfo(HttpServletRequest request){
+        User user = getUser(request);
         user.setRoles(null);
         user.setSalt(null);
         user.setPassword(null);
@@ -69,23 +72,26 @@ public class SystemController extends BaseController {
 
     @ApiOperation(value = "获取用户后台菜单信息", notes = "获取当前登录的用户所拥有的后台菜单信息")
     @GetMapping("/getAdminMenuByAccount")
-    public ResponseBean getAdminMenuByAccount(){
-        Subject subject = SecurityUtils.getSubject();
-        String token = subject.getPrincipals().getPrimaryPrincipal().toString();
-        String account = JwtUtil.getUsername(token);
-        List<Menu> menuByAccount = menuService.getMenuByAccount(account, 0);
+    @ResponseBody
+    public ResponseBean getAdminMenuByAccount(HttpServletRequest request){
+        User user = getUser(request);
+        List<Menu> menuByAccount = menuService.getMenuByAccount(user.getAccount(), 0);
         return new ResponseBean(200, "后台菜单信息", menuByAccount);
     }
 
     @ApiOperation(value = "获取用户前台菜单信息", notes = "获取当前登录的用户所拥有的前台菜单信息")
     @GetMapping("/getPortalMenuByAccount")
-    public ResponseBean getPortalMenuByAccount(){
-        Subject subject = SecurityUtils.getSubject();
-        String token = subject.getPrincipals().getPrimaryPrincipal().toString();
-        String account = JwtUtil.getUsername(token);
-        List<Menu> menuByAccount = menuService.getMenuByAccount(account, 1);
+    @ResponseBody
+    public ResponseBean getPortalMenuByAccount(HttpServletRequest request){
+        User user = getUser(request);
+        List<Menu> menuByAccount = menuService.getMenuByAccount(user.getAccount(), 1);
         return new ResponseBean(200, "前台菜单信息", menuByAccount);
     }
+
+   /* @RequestMapping("/")
+    public String index(){
+        return "Perfree-Blog-Page/index.html";
+    }*/
 
     public static void main(String[] args) {
         String password = "123456";

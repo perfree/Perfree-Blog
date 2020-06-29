@@ -1,4 +1,4 @@
-package com.perfree.common;
+package com.perfree.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

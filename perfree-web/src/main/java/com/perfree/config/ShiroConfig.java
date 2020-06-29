@@ -65,7 +65,7 @@ public class ShiroConfig {
         // 开放登录,401
         filterRuleMap.put("/login", "anon");
         filterRuleMap.put("/401/**", "anon");
-        filterRuleMap.put("/**", "jwt");
+        filterRuleMap.put("/api/**", "jwt");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

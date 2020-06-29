@@ -1,11 +1,11 @@
 package com.perfree.config;
 
 import com.perfree.common.JwtToken;
-import com.perfree.common.JwtUtil;
 import com.perfree.exception.UnauthorizedException;
 import com.perfree.model.Role;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
+import com.perfree.util.JwtUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
