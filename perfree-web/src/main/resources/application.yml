@@ -14,9 +14,14 @@ swagger:
 ## �˿ں�
 server:
   port: 8080
-
+upload:
+  imgPath: F:\\test
 ## ����Դ����
 spring:
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/perfreeblog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root

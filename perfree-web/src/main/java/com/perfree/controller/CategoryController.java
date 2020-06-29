@@ -1,6 +1,7 @@
 package com.perfree.controller;
 
 import com.perfree.common.Pager;
+import com.perfree.common.ResponseBean;
 import com.perfree.model.Category;
 import com.perfree.service.CategoryService;
 import io.swagger.annotations.Api;
@@ -20,5 +21,23 @@ public class CategoryController extends BaseController{
     @PostMapping("/list")
     public Pager<Category> list(@RequestBody Pager<Category> pager){
         return categoryService.list(pager);
+    }
+
+    @ApiOperation(value = "添加分类", notes = "添加分类")
+    @PostMapping("/add")
+    public ResponseBean add(@RequestBody Category category){
+        return categoryService.add(category);
+    }
+
+    @ApiOperation(value = "更新分类", notes = "更新分类")
+    @PostMapping("/update")
+    public ResponseBean update(@RequestBody Category category){
+        return categoryService.update(category);
+    }
+
+    @ApiOperation(value = "删除分类", notes = "删除分类")
+    @DeleteMapping("/delete/{id}")
+    public ResponseBean delete(@PathVariable("id") Integer id){
+        return categoryService.delete(id);
     }
 }

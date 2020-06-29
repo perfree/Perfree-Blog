@@ -3,11 +3,13 @@ package com.perfree.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
+import com.perfree.common.ResponseBean;
 import com.perfree.mapper.CategoryMapper;
 import com.perfree.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,5 +32,48 @@ public class CategoryService {
         pager.setTotal(pageInfo.getTotal());
         pager.setData(pageInfo.getList());
         return pager;
+    }
+
+
+    /**
+     * 添加分类
+     * @param category 分类
+     * @return ResponseBean
+     */
+    public ResponseBean add(Category category) {
+        category.setCreateTime(new Date());
+        category.setUpdateTime(new Date());
+        int count = categoryMapper.add(category);
+        if (count > 0){
+            return new ResponseBean(200,"添加成功",null);
+        }
+        return new ResponseBean(500,"添加失败",null);
+    }
+
+    /**
+     * 更新分类
+     * @param category 分类
+     * @return ResponseBean
+     */
+    public ResponseBean update(Category category) {
+        category.setUpdateTime(new Date());
+        int count = categoryMapper.update(category);
+        if (count > 0){
+            return new ResponseBean(200,"更新成功",null);
+        }
+        return new ResponseBean(500,"更新失败",null);
+    }
+
+    /**
+     * 删除分类
+     * @param id id
+     * @return ResponseBean
+     */
+    public ResponseBean delete(Integer id) {
+        int count = categoryMapper.delete(id);
+        if (count > 0) {
+            return new ResponseBean(200, "删除成功", null);
+        }
+        return new ResponseBean(500,"删除失败",null);
     }
 }
