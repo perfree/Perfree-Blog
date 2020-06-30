@@ -2,7 +2,6 @@ package com.perfree.controller;
 
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
-import com.perfree.model.Category;
 import com.perfree.model.Tag;
 import com.perfree.service.TagService;
 import io.swagger.annotations.Api;
