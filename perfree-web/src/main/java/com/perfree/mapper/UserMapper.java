@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.perfree.model.User;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,4 +36,39 @@ public interface UserMapper {
      * @return
      */
     Integer addUserAndRole(List<Integer> roleIds,Long userId);
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    Integer updateUser(User user);
+
+    /**
+     * 根据用户Id查询
+     * @param Id
+     * @return
+     */
+    User getUser(Long Id);
+
+    /**
+     * 根据用户ID删除所有的角色关联信息
+     * @param Id
+     * @return
+     */
+    Integer delUserAndRole(Long Id);
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    Integer deleteUser(Long id);
+
+    /**
+     * 更新状态
+     * @param user
+     * @return
+     */
+    Integer updateStatus(User user);
 }
