@@ -14,4 +14,5 @@ public interface RoleMapper {
      * @return Pager<Role>
      */
     List<Role> list(Role role);
+
 }

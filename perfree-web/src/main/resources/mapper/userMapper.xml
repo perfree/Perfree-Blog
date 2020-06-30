@@ -51,8 +51,14 @@
     </select>
 
     <!-- 用户列表分页 -->
-    <select id="list" parameterType="com.perfree.model.User" resultType="com.perfree.model.User">
-        select t.* from t_user t where 1 = 1
+    <select id="list" parameterType="com.perfree.model.User" resultMap="user_map">
+        select distinct t.*
+        from t_user t
+        left join t_user_role t2
+        on t2.userId = t.id
+        left join t_role t3
+        on t3.id = t2.roleId
+        where 1 = 1
         <if test="name !=null and name !=''">
             and t.name like concat(concat('%',#{name}),'%')
         </if>
@@ -66,4 +72,65 @@
             and t.status = #{status}
         </if>
     </select>
+
+    <insert id="addUser" parameterType="com.perfree.model.User" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
+        insert into t_user(name,account,password,salt,email,sex,age,createTime,updateTime)
+        values (#{name},#{account},#{password},#{salt},#{email},#{sex},#{age},#{createTime},#{updateTime})
+    </insert>
+
+    <insert id="addUserAndRole" parameterType="java.util.Map">
+        insert into
+        t_user_role(userId ,roleId)
+        values
+        <foreach collection="roleIds" item="item" index="index" separator="," >
+            (
+            #{userId},
+            #{item}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="delUserAndRole" parameterType="java.lang.Long">
+        delete from t_user_role where userId = #{userId}
+    </delete>
+    <delete id="deleteUser" parameterType="java.lang.Long">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <select id="getUser" parameterType="java.lang.Long" resultType="com.perfree.model.User">
+        select t.* from t_user t where t.id = #{id}
+    </select>
+
+    <update id="updateUser" parameterType="com.perfree.model.User">
+        update t_user t set
+        <if test="name !=null and name !=''">
+            t.name = #{name},
+        </if>
+        <if test="account !=null and account !=''">
+            t.account = #{account},
+        </if>
+        <if test="password !=null and password !=''">
+            t.password = #{password},
+        </if>
+        <if test="salt !=null and salt !=''">
+            t.salt = #{salt},
+        </if>
+        <if test="email !=null and email !=''">
+            t.email = #{email},
+        </if>
+        <if test="sex !=null and sex !=''">
+            t.sex = #{sex},
+        </if>
+        <if test="age !=null and age !=''">
+            t.age = #{age},
+        </if>
+        updateTime = #{updateTime}
+        where t.id = #{id}
+    </update>
+
+    <!-- 更新状态 -->
+    <update id="updateStatus" parameterType="com.perfree.model.User">
+        UPDATE t_user SET status = #{status}
+        where id = #{id}
+    </update>
 </mapper>
