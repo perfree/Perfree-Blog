@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.perfree.mapper.TagMapper" >
+    <select id="list" resultType="com.perfree.model.Tag">
+        select * from t_tag
+        <if test="tagName != null and tagName != ''">
+            where tagName like concat('%',#{tagName},'%')
+        </if>
+    </select>
+
+    <insert id="add">
+          INSERT INTO t_tag (tagName, createTime,updateTime)
+                       VALUES
+                       (#{tagName}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="update">
+        UPDATE t_tag SET
+        tagName = #{tagName},
+        updateTime = #{updateTime}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+           delete from t_tag where id = #{id}
+    </delete>
+</mapper>
