@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 23/06/2020 15:38:07
+ Date: 30/06/2020 17:40:27
 */
 
 SET NAMES utf8mb4;
@@ -25,9 +25,9 @@ CREATE TABLE `t_article`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `articleTitle` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章标题',
   `articleContent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章内容',
-  `status` int(1) NOT NULL COMMENT '文章状态0:正常,1:隐藏,2:置顶',
+  `status` int(1) NOT NULL COMMENT '文章状态0:正常,1:隐藏,2:置顶,3:草稿',
   `thumbnailId` bigint(20) NULL DEFAULT NULL COMMENT '文章缩略图,对应附件Id',
-  `articleSummary` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文章描述',
+  `articleSummary` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文章描述/摘要',
   `thumbnailType` int(1) NOT NULL DEFAULT 0 COMMENT '缩略图类型:0:随机,1:大图,2:小图',
   `categoryId` int(11) NOT NULL COMMENT '所属分类',
   `userId` int(11) NOT NULL COMMENT '发表人',
@@ -36,8 +36,10 @@ CREATE TABLE `t_article`  (
   `password` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '密码',
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `keyword` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '关键字',
+  `isAllowComment` int(1) NULL DEFAULT 0 COMMENT '是否允许评论:0允许,1不允许',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_article_tag
@@ -74,12 +76,27 @@ CREATE TABLE `t_category`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_category
 -- ----------------------------
-INSERT INTO `t_category` VALUES (1, '1', '1', '1', 1, '2020-06-23 11:50:19', '2020-06-23 11:50:21');
+INSERT INTO `t_category` VALUES (3, '1', '/img/1593509921297-The Mire.png', '123', 1, '2020-06-30 09:38:45', '2020-06-30 09:38:45');
+
+-- ----------------------------
+-- Table structure for t_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `t_comment`;
+CREATE TABLE `t_comment`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `context` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
+  `articleId` bigint(20) NOT NULL COMMENT '文章Id',
+  `commentator` bigint(20) NOT NULL COMMENT '评论人',
+  `audit` int(1) NOT NULL DEFAULT 0 COMMENT '审核：0未审核，1通过，2未通过',
+  `auditTime` datetime(0) NULL DEFAULT NULL COMMENT '审核时间',
+  `createTime` datetime(0) NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_menu
@@ -99,15 +116,19 @@ CREATE TABLE `t_menu`  (
   `source` int(1) NOT NULL COMMENT '来源:0默认.1用户添加',
   `status` int(1) NOT NULL COMMENT '状态:0可用,1禁用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_menu
 -- ----------------------------
-INSERT INTO `t_menu` VALUES (1, '控制台', 'line-chart', '/admin/console', -1, 1, 0, '_self', '2020-04-10 16:10:17', '2020-06-23 01:23:43', 0, 1);
-INSERT INTO `t_menu` VALUES (2, '菜单管理', 'menu', '/admin/menus', -1, 4, 0, '_self', '2020-06-22 10:27:39', '2020-06-23 02:35:02', 0, 0);
-INSERT INTO `t_menu` VALUES (13, '用户管理', 'user', '/admin/user', -1, 3, 0, '_self', '2020-06-23 01:57:33', '2020-06-23 02:34:58', 0, 0);
+INSERT INTO `t_menu` VALUES (1, '控制台', 'line-chart', '/admin/console', -1, 0, 0, '_self', '2020-04-10 16:10:17', '2020-06-30 01:08:57', 0, 1);
+INSERT INTO `t_menu` VALUES (2, '菜单管理', 'menu', '/admin/menus', -1, 4, 0, '_self', '2020-06-22 10:27:39', '2020-06-29 09:33:12', 0, 0);
+INSERT INTO `t_menu` VALUES (13, '用户管理', 'user', '/admin/user', -1, 5, 0, '_self', '2020-06-23 01:57:33', '2020-06-30 05:39:14', 0, 0);
 INSERT INTO `t_menu` VALUES (14, '分类管理', 'reconciliation', '/admin/category', -1, 2, 0, '_self', '2020-06-23 02:34:06', '2020-06-23 02:34:47', 0, 0);
+INSERT INTO `t_menu` VALUES (15, '文章管理', 'audit', '', -1, 1, 0, '_self', '2020-06-29 09:28:51', '2020-06-30 01:09:10', 0, 0);
+INSERT INTO `t_menu` VALUES (17, '新建文章', NULL, '/admin/article/create', 15, 1, 0, '_self', '2020-06-30 00:37:06', '2020-06-30 00:47:19', 0, 0);
+INSERT INTO `t_menu` VALUES (18, '标签管理', 'tag', '/admin/tag', -1, 3, 0, '_self', '2020-06-30 05:39:00', '2020-06-30 05:39:00', 0, 0);
+INSERT INTO `t_menu` VALUES (19, '文章列表', NULL, '/admin/article/list', 15, 2, 0, '_self', '2020-06-30 06:41:58', '2020-06-30 06:41:58', 0, 0);
 
 -- ----------------------------
 -- Table structure for t_role
@@ -125,7 +146,8 @@ CREATE TABLE `t_role`  (
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES (1, '超级管理员', 'admin', '2020-04-13 09:34:42', '2020-04-13 09:34:35');
+INSERT INTO `t_role` VALUES (1, '超级管理员', 'supperAdmin', '2020-04-13 09:34:42', '2020-04-13 09:34:35');
+INSERT INTO `t_role` VALUES (2, '管理员', 'admin', '2020-05-20 08:12:21', '2020-06-30 11:40:36');
 
 -- ----------------------------
 -- Table structure for t_role_menu
@@ -143,6 +165,10 @@ INSERT INTO `t_role_menu` VALUES (1, 1);
 INSERT INTO `t_role_menu` VALUES (1, 2);
 INSERT INTO `t_role_menu` VALUES (1, 13);
 INSERT INTO `t_role_menu` VALUES (1, 14);
+INSERT INTO `t_role_menu` VALUES (1, 15);
+INSERT INTO `t_role_menu` VALUES (1, 17);
+INSERT INTO `t_role_menu` VALUES (1, 18);
+INSERT INTO `t_role_menu` VALUES (1, 19);
 
 -- ----------------------------
 -- Table structure for t_tag
@@ -154,7 +180,12 @@ CREATE TABLE `t_tag`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_tag
+-- ----------------------------
+INSERT INTO `t_tag` VALUES (1, '7777', '2020-06-30 13:54:49', '2020-06-30 06:31:02');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -169,16 +200,17 @@ CREATE TABLE `t_user`  (
   `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '邮箱',
   `sex` int(1) NULL DEFAULT NULL COMMENT '性别：0女，1男',
   `age` int(11) NULL DEFAULT NULL COMMENT '年龄',
-  `status` int(1) NOT NULL COMMENT '账户状态：0：正常，1：禁用',
+  `status` int(1) NOT NULL DEFAULT 0 COMMENT '账户状态：0：正常，1：禁用',
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
 INSERT INTO `t_user` VALUES (1, 'Admin', '123456', '2b87d050b7b30bc5fc02063126cfe4b6', '557ad0b706834690b0472f41e422a8d4', 'perfree@126.com', 1, 20, 0, '2020-04-10 16:09:30', '2020-04-10 16:09:32');
+INSERT INTO `t_user` VALUES (2, 'user33', 'user33', '2a1492b5196e8f4a9aa764a2b30a5202', '626bc87fe7574ee08f36e8df9f05f42b', '123@123', 0, 20, 0, '2020-06-30 02:32:08', '2020-06-30 02:32:08');
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -193,5 +225,7 @@ CREATE TABLE `t_user_role`  (
 -- Records of t_user_role
 -- ----------------------------
 INSERT INTO `t_user_role` VALUES (1, 1);
+INSERT INTO `t_user_role` VALUES (9, 2);
+INSERT INTO `t_user_role` VALUES (2, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
