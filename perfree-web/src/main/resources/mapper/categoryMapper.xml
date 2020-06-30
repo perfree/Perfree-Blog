@@ -4,5 +4,32 @@
     <!-- 分类列表 -->
     <select id="list" resultType="com.perfree.model.Category">
         select * from t_category
+        <if test="categoryName != null and categoryName != ''">
+            where categoryName like concat('%',#{categoryName},'%')
+        </if>
     </select>
+
+    <insert id="add">
+        INSERT INTO t_category (categoryName, categoryIcon,categorySummary,seq,createTime,updateTime)
+                       VALUES
+                       (#{categoryName}, #{categoryIcon}, #{categorySummary}, #{seq}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="update">
+        UPDATE t_category SET
+        categoryName = #{categoryName},
+        seq = #{seq},
+        <if test="categoryIcon != null and categoryIcon != ''">
+            categoryIcon = #{categoryIcon},
+        </if>
+        <if test="categorySummary != null and categorySummary != ''">
+            categorySummary = #{categorySummary},
+        </if>
+        updateTime = #{updateTime}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+          delete from t_category where id = #{id}
+    </delete>
 </mapper>

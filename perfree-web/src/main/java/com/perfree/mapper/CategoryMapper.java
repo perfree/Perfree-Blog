@@ -13,4 +13,10 @@ public interface CategoryMapper {
      * @return
      */
     List<Category> list(Category category);
+
+    int add(Category category);
+
+    int update(Category category);
+
+    int delete(Integer id);
 }
