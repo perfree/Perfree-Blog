@@ -17,7 +17,7 @@ public class Article implements Serializable {
     private Integer status;
     /** 文章缩略图,对应附件Id */
     private Long thumbnailId;
-    /** 文章描述 */
+    /** 文章描述/摘要 */
     private String articleSummary;
     /** 缩略图类型:0:随机,1:大图,2:小图 */
     private Integer thumbnailType;
@@ -27,7 +27,7 @@ public class Article implements Serializable {
     private Integer userId;
     /** 浏览量 */
     private Long viewCount;
-    /** 是否加密0:不加密,1:加密 */
+    /** 是否加密0:不加密,1:加密,3:草稿 */
     private Integer isEncrypt;
     /** 密码 */
     private String password;
@@ -35,6 +35,26 @@ public class Article implements Serializable {
     private Date createTime;
     /** 更新时间 */
     private Date updateTime;
+    /** 关键字 */
+    private String keyword;
+    /** 是否允许评论:0允许,1不允许 */
+    private Integer isAllowComment;
+
+    public Integer getIsAllowComment() {
+        return isAllowComment;
+    }
+
+    public void setIsAllowComment(Integer isAllowComment) {
+        this.isAllowComment = isAllowComment;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
     public Long getId() {
         return id;
