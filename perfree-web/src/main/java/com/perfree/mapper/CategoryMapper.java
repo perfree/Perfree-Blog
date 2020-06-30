@@ -19,4 +19,10 @@ public interface CategoryMapper {
     int update(Category category);
 
     int delete(Integer id);
+
+    /**
+     * 获取所有分类
+     * @return List<Category>
+     */
+    List<Category> all();
 }

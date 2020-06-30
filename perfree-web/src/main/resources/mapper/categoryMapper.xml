@@ -32,4 +32,8 @@
     <delete id="delete">
           delete from t_category where id = #{id}
     </delete>
+
+    <select id="all" resultType="com.perfree.model.Category">
+        select * from t_category
+    </select>
 </mapper>

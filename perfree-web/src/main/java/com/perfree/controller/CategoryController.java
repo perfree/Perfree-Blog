@@ -40,4 +40,10 @@ public class CategoryController extends BaseController{
     public ResponseBean delete(@PathVariable("id") Integer id){
         return categoryService.delete(id);
     }
+
+    @ApiOperation(value = "获取所有分类", notes = "获取所有分类")
+    @GetMapping("/all")
+    public ResponseBean all(){
+        return categoryService.all();
+    }
 }

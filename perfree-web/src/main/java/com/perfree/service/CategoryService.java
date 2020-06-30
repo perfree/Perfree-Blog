@@ -76,4 +76,13 @@ public class CategoryService {
         }
         return new ResponseBean(500,"删除失败",null);
     }
+
+    /**
+     * 获取所有分类
+     * @return ResponseBean
+     */
+    public ResponseBean all() {
+       List<Category> categories = categoryMapper.all();
+        return new ResponseBean(200, "获取所有分类", categories);
+    }
 }
