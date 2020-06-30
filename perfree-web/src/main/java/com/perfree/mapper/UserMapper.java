@@ -20,4 +20,19 @@ public interface UserMapper {
      * @return List<User>
      */
     List<User> list(User user);
+
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
+    Long addUser(User user);
+
+    /**
+     * 添加用户与角色的关联关系
+     * @param roleIds
+     * @param userId
+     * @return
+     */
+    Integer addUserAndRole(List<Integer> roleIds,Long userId);
 }

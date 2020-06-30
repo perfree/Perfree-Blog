@@ -66,4 +66,20 @@
             and t.status = #{status}
         </if>
     </select>
+
+    <insert id="addUser" parameterType="com.perfree.model.User" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
+        insert into t_user(name,account,password,salt,email,sex,age,createTime,updateTime)
+        values (#{name},#{account},#{password},#{salt},#{email},#{sex},#{age},#{createTime},#{updateTime})
+    </insert>
+    <insert id="addUserAndRole" parameterType="java.util.Map">
+        insert into
+        t_user_role(userId ,roleId)
+        values
+        <foreach collection="roleIds" item="item" index="index" separator="," >
+            (
+            #{userId},
+            #{item}
+            )
+        </foreach>
+    </insert>
 </mapper>

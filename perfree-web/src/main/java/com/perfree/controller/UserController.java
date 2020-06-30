@@ -1,6 +1,7 @@
 package com.perfree.controller;
 
 import com.perfree.common.Pager;
+import com.perfree.common.ResponseBean;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
 import io.swagger.annotations.Api;
@@ -25,4 +26,8 @@ public class UserController extends BaseController {
     public Pager<User> list(@RequestBody Pager<User> pager){
         return userService.list(pager);
     }
+
+    @ApiOperation(value = "添加用户", notes = "添加用户")
+    @PostMapping("/add")
+    public ResponseBean addUser(@RequestBody User user){ return userService.addUser(user); }
 }
