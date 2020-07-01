@@ -7,7 +7,6 @@
             where tagName like concat('%',#{tagName},'%')
         </if>
     </select>
-
     <insert id="add">
           INSERT INTO t_tag (tagName, createTime,updateTime)
                        VALUES
@@ -24,4 +23,8 @@
     <delete id="delete">
            delete from t_tag where id = #{id}
     </delete>
+
+    <select id="all" resultType="com.perfree.model.Tag">
+         select * from t_tag
+    </select>
 </mapper>

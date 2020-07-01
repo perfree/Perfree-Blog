@@ -82,7 +82,7 @@ public class CategoryService {
      * @return ResponseBean
      */
     public ResponseBean all() {
-       List<Category> categories = categoryMapper.all();
+        List<Category> categories = categoryMapper.all();
         return new ResponseBean(200, "获取所有分类", categories);
     }
 }

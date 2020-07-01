@@ -34,4 +34,10 @@ public interface TagMapper {
      * @return
      */
     int delete(Integer id);
+
+    /**
+     * 获取所有标签
+     * @return  List<Tag>
+     */
+    List<Tag> all();
 }

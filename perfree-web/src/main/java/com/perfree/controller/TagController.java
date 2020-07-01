@@ -40,4 +40,10 @@ public class TagController extends BaseController{
     public ResponseBean delete(@PathVariable("id") Integer id){
         return tagService.delete(id);
     }
+
+    @ApiOperation(value = "获取所有标签", notes = "获取所有标签")
+    @GetMapping("/all")
+    public ResponseBean all(){
+        return tagService.all();
+    }
 }

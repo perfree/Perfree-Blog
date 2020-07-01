@@ -75,4 +75,13 @@ public class TagService {
         }
         return new ResponseBean(500,"删除失败",null);
     }
+
+    /**
+     * 获取所有标签
+     * @return ResponseBean
+     */
+    public ResponseBean all() {
+        List<Tag> tags = tagMapper.all();
+        return new ResponseBean(200, "获取所有标签", tags);
+    }
 }
