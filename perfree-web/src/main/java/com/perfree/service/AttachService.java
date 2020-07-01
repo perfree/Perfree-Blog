@@ -9,6 +9,7 @@ import com.perfree.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,5 +31,20 @@ public class AttachService {
         pager.setTotal(pageInfo.getTotal());
         pager.setData(pageInfo.getList());
         return pager;
+    }
+
+    /**
+     * 保存附件信息
+     * @param fileName 文件名
+     * @param filePath 路径
+     * @param fileType 文件类型
+     */
+    public Long saveFile(String fileName, String filePath, int fileType) {
+        Attach attach = new Attach();
+        attach.setFileName(fileName);
+        attach.setFilePath(filePath);
+        attach.setFileType(fileType);
+        attach.setCreateTime(new Date());
+        return attachMapper.saveFile(attach);
     }
 }

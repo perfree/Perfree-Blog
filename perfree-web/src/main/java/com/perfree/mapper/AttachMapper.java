@@ -14,4 +14,10 @@ public interface AttachMapper {
      * @return List<Attach>
      */
     List<Attach> imageList(Attach attach);
+
+    /**
+     * 保存文件信息
+     * @param attach 信息
+     */
+    Long saveFile(Attach attach);
 }

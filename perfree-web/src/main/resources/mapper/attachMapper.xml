@@ -4,4 +4,10 @@
     <select id="imageList" resultType="com.perfree.model.Attach">
         select * from t_attach
     </select>
+
+    <insert id="saveFile" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
+          INSERT INTO t_attach (fileName, fileType,filePath,createTime)
+                       VALUES
+                       (#{fileName}, #{fileType}, #{filePath}, #{createTime})
+    </insert>
 </mapper>
