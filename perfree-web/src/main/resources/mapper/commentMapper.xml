@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.perfree.mapper.CommentMapper">
+
+    <!-- 定义基本Map -->
+    <resultMap id="comment_map" type="com.perfree.model.Comment">
+        <id column="id" property="id"></id>
+        <result column="context" property="context"></result>
+        <result column="audit" property="audit"></result>
+        <result column="auditTime" property="auditTime"></result>
+        <result column="createTime" property="createTime"></result>
+        <result column="parentId" property="parentId"></result>
+        <association property="user" javaType="com.perfree.model.User">
+            <id column="id" property="id"></id>
+            <result column="name" property="name"></result>
+        </association>
+        <association property="article" javaType="com.perfree.model.Article">
+            <id column="id" property="id"></id>
+            <result column="name" property="articleTitle"></result>
+        </association>
+        <collection property="childComment" select="getChildComment" column="id"></collection>
+    </resultMap>
+
+    <select id="list" resultMap="comment_map" parameterType="com.perfree.model.Comment">
+        select c.*,u.id commentator,a.id articleId
+        from t_comment c
+        left join t_user u
+        on c.commentator = u.id
+        left join t_article a
+        on c.articleId = a.id
+        where 1 = 1
+        and type = 1
+        and parentId = -1
+        <if test="audit != null and audit != ''">
+            and c.audit = #{audit}
+        </if>
+        order by c.createTime asc
+    </select>
+
+    <!-- 获取评论回复 -->
+    <select id="getChildComment" resultMap="comment_map" parameterType="long">
+        SELECT t.* from t_comment t  WHERE t.pid = #{id} and type = 2 order by t.seq asc
+    </select>
+</mapper>

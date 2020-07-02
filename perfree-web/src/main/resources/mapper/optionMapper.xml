@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.perfree.mapper.OptionMapper">
+
+    <!-- 修改配置 -->
+    <update id="updateOption" parameterType="com.perfree.model.Option">
+        update t_option t set
+        <if test="key != null and key != ''">
+            t.key = #{key},
+        </if>
+        <if test="value != null and value != ''">
+            t.value = #{value},
+        </if>
+        <if test="remark != null and remark != ''">
+            t.remark = #{remark},
+        </if>
+        updateTime = #{updateTime}
+        where t.id = #{id} and t.type = 1
+    </update>
+
+    <!-- 删除配置 -->
+    <delete id="delOption" parameterType="java.lang.Integer">
+        delete from t_option where id = #{id} and type = 1
+    </delete>
+
+    <!-- 配置列表 -->
+    <select id="list" resultType="com.perfree.model.Option" parameterType="com.perfree.model.Option">
+        select t.* from t_option t
+        where 1 = 1
+        <if test="key != null and key != ''">
+            and t.key like concat(concat('%',#{key}),'%')
+        </if>
+        order by createTime desc
+    </select>
+
+    <!-- 根据key查询 -->
+    <select id="getByKey" resultType="com.perfree.model.Option" parameterType="string">
+        select t.* from t_option t where t.key = #{key}
+    </select>
+
+    <!-- 添加配置 -->
+    <insert id="addOption" parameterType="com.perfree.model.Option">
+        insert into t_option (`key`,`value`,remark,createTime,updateTime) values (#{key},#{value},#{remark},#{createTime},#{updateTime})
+    </insert>
+
+</mapper>
