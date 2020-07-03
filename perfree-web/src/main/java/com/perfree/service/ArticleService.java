@@ -3,6 +3,7 @@ package com.perfree.service;
 import com.perfree.common.ResponseBean;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.model.Article;
+import com.perfree.model.ArticleTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,14 @@ public class ArticleService {
     public ResponseBean add(Article article) {
         article.setCreateTime(new Date());
         article.setUpdateTime(new Date());
-        int count = articleMapper.add(article);
-        if (count > 0){
+        Long articleId = articleMapper.add(article);
+        if (article.getTags().size() > 0){
+            for (ArticleTag tag : article.getTags()) {
+                tag.setArticleId(articleId);
+            }
+            articleMapper.addTags(article.getTags());
+        }
+        if (articleId > 0){
             return new ResponseBean(200,"添加成功",null);
         }
         return new ResponseBean(500,"添加失败",null);

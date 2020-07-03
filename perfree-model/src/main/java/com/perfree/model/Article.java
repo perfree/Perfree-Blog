@@ -2,6 +2,7 @@ package com.perfree.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 文章
@@ -39,6 +40,17 @@ public class Article implements Serializable {
     private String keyword;
     /** 是否允许评论:0允许,1不允许 */
     private Integer isAllowComment;
+    /** 标签 */
+    private List<ArticleTag> tags;
+
+
+    public List<ArticleTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<ArticleTag> tags) {
+        this.tags = tags;
+    }
 
     public Integer getIsAllowComment() {
         return isAllowComment;
