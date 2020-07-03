@@ -56,6 +56,9 @@ public class UploadController extends BaseController {
         result.put("filePath", filePath);
         result.put("id", id.toString());
         result.put("name", file.getName());
+        // editor.md需要参数
+        result.put("success", "1");
+        result.put("message", "上传成功");
         return result;
     }
 }

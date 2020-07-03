@@ -24,7 +24,7 @@ public class Article implements Serializable {
     /** 所属分类 */
     private Integer categoryId;
     /** 发表人 */
-    private Integer userId;
+    private Long userId;
     /** 浏览量 */
     private Long viewCount;
     /** 是否加密0:不加密,1:加密,3:草稿 */
@@ -120,11 +120,11 @@ public class Article implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
