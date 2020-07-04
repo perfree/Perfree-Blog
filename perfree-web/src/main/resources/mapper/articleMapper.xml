@@ -3,10 +3,10 @@
 <mapper namespace="com.perfree.mapper.ArticleMapper" >
     <insert id="add" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
           INSERT INTO t_article (articleTitle, articleContent,status,thumbnailId,articleSummary,thumbnailType,
-            categoryId,userId,isEncrypt,password,createTime,updateTime,keyword,isAllowComment)
+            categoryId,userId,isEncrypt,password,createTime,updateTime,keyword,isAllowComment,isDraft)
         VALUES
            (#{articleTitle}, #{articleContent},#{status},#{thumbnailId},#{articleSummary},#{thumbnailType},
-            #{categoryId},#{userId},#{isEncrypt},#{password},#{createTime},#{updateTime},#{keyword},#{isAllowComment})
+            #{categoryId},#{userId},#{isEncrypt},#{password},#{createTime},#{updateTime},#{keyword},#{isAllowComment},#{isDraft})
     </insert>
 
     <insert id="addTags">

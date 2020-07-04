@@ -26,7 +26,7 @@ public class ArticleController extends BaseController{
 
     @ApiOperation(value = "添加文章", notes = "添加文章")
     @PostMapping("/add")
-    public ResponseBean add(@RequestBody @Valid Article article, BindingResult bindingResult, HttpServletRequest request){
+    public ResponseBean add(@RequestBody @Validated Article article, BindingResult bindingResult, HttpServletRequest request){
         //判断BindingResult中是否有错误信息
         if(bindingResult.hasErrors()){
             return new ResponseBean(500, Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);

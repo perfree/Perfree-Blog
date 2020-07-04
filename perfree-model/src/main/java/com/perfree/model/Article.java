@@ -13,7 +13,6 @@ import java.util.List;
 public class Article implements Serializable {
 
     /** 主键 */
-    @NotNull(message = "文章标题不能为空")
     private Long id;
     /** 文章标题 */
     @Size(min = 1, max = 200, message = "文章标题字数不合法")
@@ -22,7 +21,7 @@ public class Article implements Serializable {
     /** 文章内容 */
     @NotEmpty(message = "文章内容不能为空")
     private String articleContent;
-    /** 文章状态0:正常,1:隐藏,2:置顶,3:草稿  */
+    /** 文章状态0:正常,1:隐藏,2:置顶  */
     @NotNull(message = "文章状态不能为空")
     private Integer status;
     /** 文章缩略图,对应附件Id */
@@ -54,7 +53,16 @@ public class Article implements Serializable {
     private Integer isAllowComment;
     /** 标签 */
     private List<ArticleTag> tags;
+    /** 是否草稿0否，1是 */
+    private Integer isDraft;
 
+    public Integer getIsDraft() {
+        return isDraft;
+    }
+
+    public void setIsDraft(Integer isDraft) {
+        this.isDraft = isDraft;
+    }
 
     public List<ArticleTag> getTags() {
         return tags;
