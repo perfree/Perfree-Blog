@@ -15,7 +15,10 @@ swagger:
 server:
   port: 8080
 upload:
-  imgPath: F:\\test
+  ## windows
+  #imgPath: F:\\test
+  ## mac
+  imgPath: /Users/perfree/image/upload/
 ## spring配置
 spring:
   servlet:
