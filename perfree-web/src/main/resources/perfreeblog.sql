@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 03/07/2020 17:29:40
+ Date: 06/07/2020 16:24:24
 */
 
 SET NAMES utf8mb4;
@@ -25,7 +25,7 @@ CREATE TABLE `t_article`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `articleTitle` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章标题',
   `articleContent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章内容',
-  `status` int(1) NOT NULL DEFAULT 0 COMMENT '文章状态0:正常,1:隐藏,2:置顶,3:草稿',
+  `status` int(1) NOT NULL DEFAULT 0 COMMENT '文章状态0:正常,1:隐藏,2:置顶,',
   `thumbnailId` bigint(20) NULL DEFAULT NULL COMMENT '文章缩略图,对应附件Id',
   `articleSummary` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文章描述/摘要',
   `thumbnailType` int(1) NOT NULL DEFAULT 0 COMMENT '缩略图类型:0:随机,1:大图,2:小图',
@@ -38,8 +38,14 @@ CREATE TABLE `t_article`  (
   `updateTime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `keyword` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '关键字',
   `isAllowComment` int(1) NULL DEFAULT 0 COMMENT '是否允许评论:0允许,1不允许',
+  `isDraft` int(1) NOT NULL DEFAULT 0 COMMENT '是否为草稿0否，1是',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_article
+-- ----------------------------
+INSERT INTO `t_article` VALUES (37, '222', '2', 0, NULL, NULL, 0, NULL, 1, 0, 0, NULL, '2020-07-06 07:00:44', '2020-07-06 07:00:44', NULL, 0, 0);
 
 -- ----------------------------
 -- Table structure for t_article_tag
@@ -53,19 +59,8 @@ CREATE TABLE `t_article_tag`  (
 -- ----------------------------
 -- Records of t_article_tag
 -- ----------------------------
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
-INSERT INTO `t_article_tag` VALUES (1, 1);
+INSERT INTO `t_article_tag` VALUES (37, 11);
+INSERT INTO `t_article_tag` VALUES (37, 10);
 
 -- ----------------------------
 -- Table structure for t_attach
@@ -83,41 +78,13 @@ CREATE TABLE `t_attach`  (
 -- ----------------------------
 -- Records of t_attach
 -- ----------------------------
-INSERT INTO `t_attach` VALUES (1, '1593509921297-The Mire.png', 1, '/img/1593509921297-The Mire.png', '2020-07-01 09:52:32');
-INSERT INTO `t_attach` VALUES (2, '1593509921297-The Mire.png', 1, '/img/1593509921297-The Mire.png', '2020-07-01 11:28:32');
-INSERT INTO `t_attach` VALUES (3, '1593509921297-The Mire.png', 1, '/img/1593509921297-The Mire.png', '2020-07-01 11:28:32');
-INSERT INTO `t_attach` VALUES (4, '1593509921297-The Mire.png', 1, '/img/1593509921297-The Mire.png', '2020-07-01 11:28:32');
-INSERT INTO `t_attach` VALUES (5, '1593594860680-The Forest.png', 1, '/img/1593594860680-The Forest.png', '2020-07-01 09:14:21');
-INSERT INTO `t_attach` VALUES (6, '1593594937686-Toxic Valley.png', 1, '/img/1593594937686-Toxic Valley.png', '2020-07-01 09:15:38');
-INSERT INTO `t_attach` VALUES (7, '1593595072468-Ash Heap.png', 1, '/img/1593595072468-Ash Heap.png', '2020-07-01 09:17:52');
-INSERT INTO `t_attach` VALUES (8, '1593595200671-Cranberry Bog.png', 1, '/img/1593595200671-Cranberry Bog.png', '2020-07-01 09:20:01');
-INSERT INTO `t_attach` VALUES (9, '1593595250946-Savage Divide.png', 1, '/img/1593595250946-Savage Divide.png', '2020-07-01 09:20:51');
-INSERT INTO `t_attach` VALUES (10, '1593595274060-The Forest.png', 1, '/img/1593595274060-The Forest.png', '2020-07-01 09:21:14');
-INSERT INTO `t_attach` VALUES (11, '1593595452023-Toxic Valley.png', 1, '/img/1593595452023-Toxic Valley.png', '2020-07-01 09:24:12');
-INSERT INTO `t_attach` VALUES (12, '1593595474765-Savage Divide.png', 1, '/img/1593595474765-Savage Divide.png', '2020-07-01 09:24:35');
-INSERT INTO `t_attach` VALUES (13, '1593595540573-Toxic Valley.png', 1, '/img/1593595540573-Toxic Valley.png', '2020-07-01 09:25:41');
-INSERT INTO `t_attach` VALUES (14, '1593596067596-The Mire.png', 1, '/img/1593596067596-The Mire.png', '2020-07-01 09:34:28');
-INSERT INTO `t_attach` VALUES (15, '1593596097019-Toxic Valley.png', 1, '/img/1593596097019-Toxic Valley.png', '2020-07-01 09:34:57');
-INSERT INTO `t_attach` VALUES (16, '1593596247351-The Mire.png', 1, '/img/1593596247351-The Mire.png', '2020-07-01 09:37:27');
-INSERT INTO `t_attach` VALUES (17, '1593596501558-Toxic Valley.png', 1, '/img/1593596501558-Toxic Valley.png', '2020-07-01 09:41:42');
-INSERT INTO `t_attach` VALUES (18, '1593596546399-Toxic Valley.png', 1, '/img/1593596546399-Toxic Valley.png', '2020-07-01 09:42:26');
-INSERT INTO `t_attach` VALUES (19, '1593659817644-Toxic Valley.png', 1, '/img/1593659817644-Toxic Valley.png', '2020-07-02 03:16:58');
-INSERT INTO `t_attach` VALUES (20, '1593662000434-Toxic Valley.png', 1, '/img/1593662000434-Toxic Valley.png', '2020-07-02 03:53:20');
-INSERT INTO `t_attach` VALUES (21, '1593662428859-Toxic Valley.png', 1, '/img/1593662428859-Toxic Valley.png', '2020-07-02 04:00:29');
-INSERT INTO `t_attach` VALUES (22, '1593677481462-The Forest.png', 1, '/img/1593677481462-The Forest.png', '2020-07-02 08:11:21');
-INSERT INTO `t_attach` VALUES (23, '1593677612981-The Mire.png', 1, '/img/1593677612981-The Mire.png', '2020-07-02 08:13:33');
-INSERT INTO `t_attach` VALUES (24, '1593677701925-Toxic Valley.png', 1, '/img/1593677701925-Toxic Valley.png', '2020-07-02 08:15:02');
-INSERT INTO `t_attach` VALUES (25, '1593677733704-Toxic Valley.png', 1, '/img/1593677733704-Toxic Valley.png', '2020-07-02 08:15:34');
-INSERT INTO `t_attach` VALUES (26, '1593678215751-Toxic Valley.png', 1, '/img/1593678215751-Toxic Valley.png', '2020-07-02 08:23:36');
-INSERT INTO `t_attach` VALUES (27, '1593678258559-Toxic Valley.png', 1, '/img/1593678258559-Toxic Valley.png', '2020-07-02 08:24:19');
-INSERT INTO `t_attach` VALUES (28, '1593678308928-The Mire.png', 1, '/img/1593678308928-The Mire.png', '2020-07-02 08:25:09');
-INSERT INTO `t_attach` VALUES (29, '1593678345963-Toxic Valley.png', 1, '/img/1593678345963-Toxic Valley.png', '2020-07-02 08:25:46');
-INSERT INTO `t_attach` VALUES (30, '1593678381092-The Mire.png', 1, '/img/1593678381092-The Mire.png', '2020-07-02 08:26:21');
-INSERT INTO `t_attach` VALUES (31, '1593678551436-Toxic Valley.png', 1, '/img/1593678551436-Toxic Valley.png', '2020-07-02 08:29:11');
-INSERT INTO `t_attach` VALUES (32, '1593678612981-The Mire.png', 1, '/img/1593678612981-The Mire.png', '2020-07-02 08:30:13');
-INSERT INTO `t_attach` VALUES (33, '1593678635345-The Forest.png', 1, '/img/1593678635345-The Forest.png', '2020-07-02 08:30:35');
-INSERT INTO `t_attach` VALUES (34, '1593678669985-The Mire.png', 1, '/img/1593678669985-The Mire.png', '2020-07-02 08:31:10');
-INSERT INTO `t_attach` VALUES (35, '1593678991597-Toxic Valley.png', 1, '/img/1593678991597-Toxic Valley.png', '2020-07-02 08:36:32');
+INSERT INTO `t_attach` VALUES (37, '1594000077273-The Mire.png', 1, '/img/1594000077273-The Mire.png', '2020-07-06 01:47:57');
+INSERT INTO `t_attach` VALUES (38, '1594000132579-Toxic Valley.png', 1, '/img/1594000132579-Toxic Valley.png', '2020-07-06 01:48:53');
+INSERT INTO `t_attach` VALUES (39, '1594001299344-Toxic Valley.png', 1, '/img/2020-07-06/1594001299344-Toxic Valley.png', '2020-07-06 02:08:19');
+INSERT INTO `t_attach` VALUES (40, '1594001322321-The Forest.png', 1, '/img/2020-07-06/1594001322321-The Forest.png', '2020-07-06 02:09:55');
+INSERT INTO `t_attach` VALUES (41, '1594001405659-Toxic Valley.png', 1, '/img/2020-07-06/1594001405659-Toxic Valley.png', '2020-07-06 02:10:07');
+INSERT INTO `t_attach` VALUES (42, '1594001414793-The Forest.png', 1, '/img/2020-07-06/1594001414793-The Forest.png', '2020-07-06 02:10:15');
+INSERT INTO `t_attach` VALUES (43, '1594001513053-Cranberry Bog.png', 1, '/img/2020-07-06/1594001513053-Cranberry Bog.png', '2020-07-06 02:11:53');
 
 -- ----------------------------
 -- Table structure for t_category
@@ -274,7 +241,9 @@ CREATE TABLE `t_tag`  (
 -- ----------------------------
 -- Records of t_tag
 -- ----------------------------
-INSERT INTO `t_tag` VALUES (1, '7777', '2020-06-30 13:54:49', '2020-06-30 06:31:02');
+INSERT INTO `t_tag` VALUES (9, '测试标签', '2020-07-06 01:34:39', '2020-07-06 01:34:39');
+INSERT INTO `t_tag` VALUES (10, '222', '2020-07-06 03:44:01', '2020-07-06 03:44:01');
+INSERT INTO `t_tag` VALUES (11, '马渣渣', '2020-07-06 06:58:47', '2020-07-06 06:58:47');
 
 -- ----------------------------
 -- Table structure for t_user
