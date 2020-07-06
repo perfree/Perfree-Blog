@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.AttachMapper" >
     <select id="imageList" resultType="com.perfree.model.Attach">
-        select * from t_attach
+        select * from t_attach order by id desc
     </select>
 
     <insert id="saveFile" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">

@@ -16,9 +16,9 @@ server:
   port: 8080
 upload:
   ## windows
-  #imgPath: F:\\test
+  imgPath: F:\\test\\
   ## mac
-  imgPath: /Users/perfree/image/upload/
+  #imgPath: /Users/perfree/image/upload/
 ## spring配置
 spring:
   servlet:

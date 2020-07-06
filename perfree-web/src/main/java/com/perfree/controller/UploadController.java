@@ -2,6 +2,7 @@ package com.perfree.controller;
 
 import com.perfree.mapper.AttachMapper;
 import com.perfree.service.AttachService;
+import com.perfree.util.DateUtils;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,18 +37,19 @@ public class UploadController extends BaseController {
         // 生成最终保存的文件名,格式为: 时间戳-文件名.扩展名
         String uid = String.valueOf(new Date().getTime());
         String saveFileName = uid + "-" + name + "." + fileExtensionName;
-        File fileDir = new File(uploadImgPath);
+        String dayDir = DateUtils.format(new Date(), "YYYY-MM-dd") + "/";
+        File fileDir = new File(uploadImgPath + dayDir);
         if (!fileDir.exists()){
             fileDir.setWritable(true);
             fileDir.mkdirs();
         }
-        File targetFile = new File(uploadImgPath, saveFileName);
+        File targetFile = new File(uploadImgPath + dayDir, saveFileName);
         try {
             file.transferTo(targetFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String filePath = String.format("/img/%s", saveFileName);
+        String filePath = String.format("/img/%s", dayDir + saveFileName);
         Long id = attachService.saveFile(saveFileName, filePath, 1);
         Map<String, String> result = new HashMap<>();
         result.put("url", filePath);
