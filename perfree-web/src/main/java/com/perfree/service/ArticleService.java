@@ -8,7 +8,6 @@ import com.perfree.mapper.ArticleMapper;
 import com.perfree.mapper.TagMapper;
 import com.perfree.model.Article;
 import com.perfree.model.ArticleTag;
-import com.perfree.model.Category;
 import com.perfree.model.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,5 +70,19 @@ public class ArticleService {
         pager.setTotal(pageInfo.getTotal());
         pager.setData(pageInfo.getList());
         return pager;
+    }
+
+    /**
+     * 删除文章
+     * @param id 文章id
+     * @return ResponseBean
+     */
+    public ResponseBean delete(Long id) {
+        int count = articleMapper.delete(id);
+        articleMapper.deleteArticleTag(id);
+        if (count > 0) {
+            return new ResponseBean(200, "删除成功", null);
+        }
+        return new ResponseBean(500,"删除失败",null);
     }
 }

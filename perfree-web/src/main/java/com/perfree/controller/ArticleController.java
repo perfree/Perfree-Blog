@@ -40,4 +40,10 @@ public class ArticleController extends BaseController{
     public Pager<Article> list(@RequestBody Pager<Article> pager){
         return articleService.list(pager);
     }
+
+    @ApiOperation(value = "删除文章", notes = "删除文章")
+    @DeleteMapping("/delete/{id}")
+    public ResponseBean delete(@PathVariable("id") Long id){
+        return articleService.delete(id);
+    }
 }

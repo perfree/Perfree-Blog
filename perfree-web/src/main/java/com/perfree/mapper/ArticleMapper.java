@@ -30,4 +30,17 @@ public interface ArticleMapper {
      * @return List<Article>
      */
     List<Article> list(Article article);
+
+    /**
+     * 删除文章
+     * @param id id
+     * @return int
+     */
+    int delete(Long id);
+
+    /**
+     * 删除文章标签
+     * @param id 文章id
+     */
+    void deleteArticleTag(Long id);
 }
