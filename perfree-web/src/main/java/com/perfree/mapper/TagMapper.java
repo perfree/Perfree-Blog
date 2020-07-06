@@ -19,7 +19,7 @@ public interface TagMapper {
      * @param tag 标签
      * @return int
      */
-    int add(Tag tag);
+    Integer add(Tag tag);
 
     /**
      * 更新标签

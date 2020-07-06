@@ -7,7 +7,7 @@
             where tagName like concat('%',#{tagName},'%')
         </if>
     </select>
-    <insert id="add">
+    <insert id="add" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
           INSERT INTO t_tag (tagName, createTime,updateTime)
                        VALUES
                        (#{tagName}, #{createTime}, #{updateTime})

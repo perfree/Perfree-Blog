@@ -4,6 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,9 +53,19 @@ public class Article implements Serializable {
     @NotNull(message = "是否允许评论不能为空")
     private Integer isAllowComment;
     /** 标签 */
-    private List<ArticleTag> tags;
+    private List<ArticleTag> tags = new ArrayList<>();
+    /** 新增的标签 */
+    private List<Tag> addTags;
     /** 是否草稿0否，1是 */
     private Integer isDraft;
+
+    public List<Tag> getAddTags() {
+        return addTags;
+    }
+
+    public void setAddTags(List<Tag> addTags) {
+        this.addTags = addTags;
+    }
 
     public Integer getIsDraft() {
         return isDraft;
