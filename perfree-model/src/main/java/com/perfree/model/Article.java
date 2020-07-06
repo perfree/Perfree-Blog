@@ -53,18 +53,19 @@ public class Article implements Serializable {
     @NotNull(message = "是否允许评论不能为空")
     private Integer isAllowComment;
     /** 标签 */
-    private List<ArticleTag> tags = new ArrayList<>();
+    private List<ArticleTag> articleTags = new ArrayList<>();
     /** 新增的标签 */
-    private List<Tag> addTags;
+    private List<Tag> tags;
     /** 是否草稿0否，1是 */
     private Integer isDraft;
 
-    public List<Tag> getAddTags() {
-        return addTags;
+
+    public List<Tag> getTags() {
+        return tags;
     }
 
-    public void setAddTags(List<Tag> addTags) {
-        this.addTags = addTags;
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     public Integer getIsDraft() {
@@ -75,12 +76,12 @@ public class Article implements Serializable {
         this.isDraft = isDraft;
     }
 
-    public List<ArticleTag> getTags() {
-        return tags;
+    public List<ArticleTag> getArticleTags() {
+        return articleTags;
     }
 
-    public void setTags(List<ArticleTag> tags) {
-        this.tags = tags;
+    public void setArticleTags(List<ArticleTag> articleTags) {
+        this.articleTags = articleTags;
     }
 
     public Integer getIsAllowComment() {

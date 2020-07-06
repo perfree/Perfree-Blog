@@ -17,4 +17,34 @@
             (#{tag.articleId}, #{tag.tagId})
         </foreach >
     </insert>
+
+    <!-- 定义菜单树形结构 -->
+    <resultMap id="ARTICLE_COLUMN" type="com.perfree.model.Article">
+        <id property="id" column="id"></id>
+        <result property="articleTitle" column="articleTitle"></result>
+        <result property="articleContent" column="articleContent"></result>
+        <result property="status" column="status"></result>
+        <result property="thumbnailId" column="thumbnailId"></result>
+        <result property="articleSummary" column="articleSummary"></result>
+        <result property="thumbnailType" column="thumbnailType"></result>
+        <result property="categoryId" column="categoryId"></result>
+        <result property="userId" column="userId"></result>
+        <result property="viewCount" column="viewCount"></result>
+        <result property="isEncrypt" column="isEncrypt"></result>
+        <result property="password" column="password"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="updateTime" column="updateTime"></result>
+        <result property="keyword" column="keyword"></result>
+        <result property="isAllowComment" column="isAllowComment"></result>
+        <result property="isDraft" column="isDraft"></result>
+        <collection property="tags" select="getTagsByArticleId" column="id"></collection>
+    </resultMap>
+
+    <select id="list" resultMap="ARTICLE_COLUMN">
+        select * from t_article
+    </select>
+
+    <select id="getTagsByArticleId" resultType="com.perfree.model.Tag" parameterType="long">
+        SELECT t1.* from t_article_tag t LEFT JOIN t_tag t1 on t.tagId = t1.id where t.articleId = #{id}
+    </select>
 </mapper>

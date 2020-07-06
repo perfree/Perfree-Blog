@@ -23,4 +23,11 @@ public interface ArticleMapper {
      * @return int
      */
     int addTags(List<ArticleTag> list);
+
+    /**
+     * 文章列表
+     * @param article 文章
+     * @return List<Article>
+     */
+    List<Article> list(Article article);
 }

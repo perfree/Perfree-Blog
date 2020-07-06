@@ -1,5 +1,6 @@
 package com.perfree.controller;
 
+import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
@@ -11,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.Objects;
 
 @Api(tags = "文章接口")
@@ -33,5 +33,11 @@ public class ArticleController extends BaseController{
         }
         article.setUserId(getUser(request).getId());
         return articleService.add(article);
+    }
+
+    @ApiOperation(value = "文章列表分页", notes = "文章列表分页")
+    @PostMapping("/list")
+    public Pager<Article> list(@RequestBody Pager<Article> pager){
+        return articleService.list(pager);
     }
 }
