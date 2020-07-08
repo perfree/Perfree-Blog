@@ -47,15 +47,12 @@
         <collection property="tags" select="getTagsByArticleId" column="id"></collection>
     </resultMap>
 
-    <select id="list" resultMap="ARTICLE_COLUMN">
+    <select id="list" resultMap="ARTICLE_COLUMN" parameterType="com.perfree.model.Article">
         select t.*,t1.name,t2.categoryName,t3.filePath,t3.id as attachId,t3.fileName,t3.fileType,t3.createTime from t_article t
         left join t_user t1 on t.userId = t1.id
         left join t_category t2 on t.categoryId = t2.id
         LEFT JOIN t_attach t3 on t.thumbnailId = t3.id
-        where 1 = 1
-        <if test="isDraft != null and isDraft != ''">
-            and t.isDraft = #{isDraft}
-        </if>
+        where t.isDraft = #{isDraft}
         <if test="articleTitle != null and articleTitle != ''">
             and t.articleTitle like concat('%',#{articleTitle},'%')
         </if>
@@ -84,6 +81,30 @@
 
 
     <update id="update">
-
+        UPDATE t_article SET
+        articleTitle = #{articleTitle},
+        articleContent = #{articleContent},
+        status = #{status},
+        thumbnailType = #{thumbnailType},
+        isEncrypt = #{isEncrypt},
+        isAllowComment = #{isAllowComment},
+        isDraft = #{isDraft},
+        <if test="thumbnailId != null and thumbnailId != ''">
+            thumbnailId = #{thumbnailId},
+        </if>
+        <if test="articleSummary != null and articleSummary != ''">
+            articleSummary = #{articleSummary},
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            categoryId = #{categoryId},
+        </if>
+        <if test="password != null and password != ''">
+            password = #{password},
+        </if>
+        <if test="keyword != null and keyword != ''">
+            keyword = #{keyword},
+        </if>
+        updateTime = #{updateTime}
+        where id = #{id}
     </update>
 </mapper>

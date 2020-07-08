@@ -9,6 +9,8 @@ import com.perfree.mapper.TagMapper;
 import com.perfree.model.Article;
 import com.perfree.model.ArticleTag;
 import com.perfree.model.Tag;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,9 @@ public class ArticleService {
     public ResponseBean add(Article article) {
         article.setCreateTime(new Date());
         article.setUpdateTime(new Date());
+        if (StringUtils.isNotBlank(article.getPassword())){
+            article.setPassword(new SimpleHash("MD5", article.getPassword()).toString());
+        }
         Long articleId = articleMapper.add(article);
         articleTagHandle(article);
         if (articleId > 0){
