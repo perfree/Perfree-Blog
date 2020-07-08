@@ -46,4 +46,20 @@ public class ArticleController extends BaseController{
     public ResponseBean delete(@PathVariable("id") Long id){
         return articleService.delete(id);
     }
+
+    @ApiOperation(value = "根据id获取文章", notes = "根据id获取文章")
+    @GetMapping("/getArticleById/{id}")
+    public ResponseBean getArticleById(@PathVariable("id") Long id) {
+        return articleService.getArticleById(id);
+    }
+
+    @ApiOperation(value = "更新文章", notes = "更新文章")
+    @PostMapping("/update")
+    public ResponseBean update(@RequestBody @Validated Article article, BindingResult bindingResult, HttpServletRequest request){
+        //判断BindingResult中是否有错误信息
+        if(bindingResult.hasErrors()){
+            return new ResponseBean(500, Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), null);
+        }
+        return articleService.update(article);
+    }
 }

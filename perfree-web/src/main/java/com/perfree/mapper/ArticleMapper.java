@@ -43,4 +43,18 @@ public interface ArticleMapper {
      * @param id 文章id
      */
     void deleteArticleTag(Long id);
+
+    /**
+     * 根据文章id获取数据
+     * @param id id
+     * @return Article
+     */
+    Article getArticleById(Long id);
+
+    /**
+     * 更新文章
+     * @param article 文章
+     * @return int
+     */
+    int update(Article article);
 }

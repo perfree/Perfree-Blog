@@ -39,15 +39,31 @@
         <result property="isDraft" column="isDraft"></result>
         <result property="category.categoryName" column="categoryName"></result>
         <result property="user.name" column="name"></result>
+        <result property="attach.filePath" column="filePath"></result>
+        <result property="attach.id" column="attachId"></result>
+        <result property="attach.fileName" column="fileName"></result>
+        <result property="attach.fileType" column="fileType"></result>
+        <result property="attach.createTime" column="createTime"></result>
         <collection property="tags" select="getTagsByArticleId" column="id"></collection>
     </resultMap>
 
     <select id="list" resultMap="ARTICLE_COLUMN">
-        select t.*,t1.name,t2.categoryName from t_article t left join t_user t1 on t.userId = t1.id left join t_category t2 on t.categoryId = t2.id
+        select t.*,t1.name,t2.categoryName,t3.filePath,t3.id as attachId,t3.fileName,t3.fileType,t3.createTime from t_article t
+        left join t_user t1 on t.userId = t1.id
+        left join t_category t2 on t.categoryId = t2.id
+        LEFT JOIN t_attach t3 on t.thumbnailId = t3.id
+        where 1 = 1
+        <if test="isDraft != null and isDraft != ''">
+            and t.isDraft = #{isDraft}
+        </if>
+        <if test="articleTitle != null and articleTitle != ''">
+            and t.articleTitle like concat('%',#{articleTitle},'%')
+        </if>
     </select>
 
     <select id="getTagsByArticleId" resultType="com.perfree.model.Tag" parameterType="long">
-        SELECT t1.* from t_article_tag t LEFT JOIN t_tag t1 on t.tagId = t1.id where t.articleId = #{id}
+        SELECT t1.* from t_article_tag t LEFT JOIN t_tag t1 on t.tagId = t1.id
+        where t.articleId = #{id}
     </select>
 
     <delete id="delete">
@@ -57,4 +73,17 @@
     <delete id="deleteArticleTag">
           delete from t_article_tag where articleId = #{id}
     </delete>
+
+    <select id="getArticleById" resultMap="ARTICLE_COLUMN">
+         select t.*,t1.name,t2.categoryName,t3.filePath,t3.id as attachId,t3.fileName,t3.fileType,t3.createTime from t_article t
+         left join t_user t1 on t.userId = t1.id
+         left join t_category t2 on t.categoryId = t2.id
+         LEFT JOIN t_attach t3 on t.thumbnailId = t3.id
+        where t.id = #{id}
+    </select>
+
+
+    <update id="update">
+
+    </update>
 </mapper>

@@ -32,24 +32,7 @@ public class ArticleService {
         article.setCreateTime(new Date());
         article.setUpdateTime(new Date());
         Long articleId = articleMapper.add(article);
-        // 处理新增的标签
-        if (article.getTags() != null && article.getTags().size() > 0) {
-            for (Tag tag :article.getTags()) {
-                tag.setCreateTime(new Date());
-                tag.setUpdateTime(new Date());
-                tagMapper.add(tag);
-                ArticleTag articleTag = new ArticleTag();
-                articleTag.setTagId(tag.getId());
-                article.getArticleTags().add(articleTag);
-            }
-        }
-        // 关联标签
-        if (article.getArticleTags() != null && article.getArticleTags().size() > 0){
-            for (ArticleTag tag : article.getArticleTags()) {
-                tag.setArticleId(article.getId());
-            }
-            articleMapper.addTags(article.getArticleTags());
-        }
+        articleTagHandle(article);
         if (articleId > 0){
             return new ResponseBean(200,"添加成功",articleId);
         }
@@ -84,5 +67,58 @@ public class ArticleService {
             return new ResponseBean(200, "删除成功", null);
         }
         return new ResponseBean(500,"删除失败",null);
+    }
+
+    /**
+     * 根据文章id获取数据
+     * @param id id
+     * @return ResponseBean
+     */
+    public ResponseBean getArticleById(Long id) {
+        return new ResponseBean(200, "获取成功", articleMapper.getArticleById(id));
+    }
+
+    /**
+     * 更新文章
+     * @param article 文章数据
+     * @return ResponseBean
+     */
+    public ResponseBean update(Article article) {
+        article.setUpdateTime(new Date());
+        // 更新文章
+        int count = articleMapper.update(article);
+        // 删除关联的标签
+        articleMapper.deleteArticleTag(article.getId());
+        // 处理新增的标签
+        articleTagHandle(article);
+        if (count > 0){
+            return new ResponseBean(200,"更新成功",article);
+        }
+        return new ResponseBean(500,"更新失败",null);
+    }
+
+    /**
+     * 文章标签处理
+     * @param article 文章
+     */
+    public void articleTagHandle(Article article){
+        // 处理新增的标签
+        if (article.getTags() != null && article.getTags().size() > 0) {
+            for (Tag tag :article.getTags()) {
+                tag.setCreateTime(new Date());
+                tag.setUpdateTime(new Date());
+                tagMapper.add(tag);
+                ArticleTag articleTag = new ArticleTag();
+                articleTag.setTagId(tag.getId());
+                article.getArticleTags().add(articleTag);
+            }
+        }
+        // 关联标签
+        if (article.getArticleTags() != null && article.getArticleTags().size() > 0){
+            for (ArticleTag tag : article.getArticleTags()) {
+                tag.setArticleId(article.getId());
+            }
+            articleMapper.addTags(article.getArticleTags());
+        }
     }
 }

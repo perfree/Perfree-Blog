@@ -64,6 +64,17 @@ public class Article implements Serializable {
     /** 用户信息 */
     private User user;
 
+    /** 封面图附件信息 */
+    private Attach attach;
+
+    public Attach getAttach() {
+        return attach;
+    }
+
+    public void setAttach(Attach attach) {
+        this.attach = attach;
+    }
+
     public User getUser() {
         return user;
     }
