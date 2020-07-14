@@ -43,4 +43,16 @@
         insert into t_option (`key`,`value`,remark,createTime,updateTime) values (#{key},#{value},#{remark},#{createTime},#{updateTime})
     </insert>
 
+    <!-- 更新网站配置 -->
+    <update id="webOption">
+        update t_option set
+        `value` = #{value},
+        updateTime = #{updateTime}
+        where `key` = #{key} and `type` = 0
+    </update>
+
+    <!-- 获取网站配置 -->
+    <select id="getWebOption" resultType="com.perfree.model.Option">
+         select * from t_option where `key` in ('webName','webTitle','webSubTitle','webDomin','caseNumber','copyright','ico')
+    </select>
 </mapper>

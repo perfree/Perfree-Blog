@@ -48,4 +48,12 @@ public interface OptionMapper {
      */
     Integer delOption(Integer id);
 
+    /**
+     * 修改web配置
+     * @param option 配置信息
+     * @return int
+     */
+    int webOption(Option option);
+
+    List<Option> getWebOption();
 }

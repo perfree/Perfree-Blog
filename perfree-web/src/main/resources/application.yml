@@ -16,7 +16,7 @@ server:
   port: 8080
 upload:
   ## windows
-  imgPath: F:\\test\\
+  imgPath: E:\\test\\
   ## mac
   #imgPath: /Users/perfree/image/upload/
 ## spring配置
@@ -27,8 +27,8 @@ spring:
       max-request-size: 30MB
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/perfreeblog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: 215521..
+    username: perfree
+    password: 215607..
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       initial-size: 5

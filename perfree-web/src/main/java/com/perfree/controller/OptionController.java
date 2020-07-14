@@ -10,6 +10,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @ClassName OptionController
  * @Author Majz
@@ -47,4 +50,16 @@ public class OptionController {
     @ApiOperation(value = "修改配置", notes = "修改配置")
     @PutMapping("/update")
     public ResponseBean updateOption(@RequestBody Option option){return  optionService.updateOption(option);}
+
+    @ApiOperation(value = "网站配置", notes = "网站配置")
+    @PostMapping("/webOption")
+    public ResponseBean webOption(@RequestBody List<Option> options){
+        return  optionService.webOption(options);
+    }
+
+    @ApiOperation(value = "获取网站配置", notes = "获取网站配置")
+    @GetMapping("/getWebOption")
+    public ResponseBean getWebOption(){
+        return  optionService.getWebOption();
+    }
 }

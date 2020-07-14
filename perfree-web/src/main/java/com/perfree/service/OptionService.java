@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -92,5 +93,31 @@ public class OptionService {
         } else {
             return new ResponseBean(500,"修改失败",null);
         }
+    }
+
+    /**
+     * 网站配置
+     * @param options 配置信息
+     * @return ResponseBean
+     */
+    public ResponseBean webOption(List<Option> options) {
+        for (Option option:options) {
+            option.setUpdateTime(new Date());
+            optionMapper.webOption(option);
+        }
+        return new ResponseBean(200,"修改成功",null);
+    }
+
+    /**
+     * 获取网站配置
+     * @return ResponseBean
+     */
+    public ResponseBean getWebOption() {
+        List<Option> webOptions = optionMapper.getWebOption();
+        HashMap<String,String> result = new HashMap<>();
+        for (Option option:webOptions) {
+            result.put(option.getKey(),option.getValue());
+        }
+        return new ResponseBean(200,"获取成功", result);
     }
 }
