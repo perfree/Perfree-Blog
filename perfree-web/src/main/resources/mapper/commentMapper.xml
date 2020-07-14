@@ -16,13 +16,13 @@
         </association>
         <association property="article" javaType="com.perfree.model.Article">
             <id column="id" property="id"></id>
-            <result column="name" property="articleTitle"></result>
+            <result column="articleTitle" property="articleTitle"></result>
         </association>
         <collection property="childComment" select="getChildComment" column="id"></collection>
     </resultMap>
 
     <select id="list" resultMap="comment_map" parameterType="com.perfree.model.Comment">
-        select c.*,u.id commentator,a.id articleId
+        select c.*,u.*,a.articleTitle
         from t_comment c
         left join t_user u
         on c.commentator = u.id
@@ -30,7 +30,7 @@
         on c.articleId = a.id
         where 1 = 1
         and type = 1
-        and parentId = -1
+        and c.parentId = -1
         <if test="audit != null and audit != ''">
             and c.audit = #{audit}
         </if>
@@ -39,6 +39,13 @@
 
     <!-- 获取评论回复 -->
     <select id="getChildComment" resultMap="comment_map" parameterType="long">
-        SELECT t.* from t_comment t  WHERE t.pid = #{id} and type = 2 order by t.seq asc
+        select c.*,u.*
+        from t_comment c
+        left join t_user u
+        on c.commentator = u.id
+        where
+        type = 2
+        and c.parentId = #{id}
+        order by c.createTime asc
     </select>
 </mapper>
