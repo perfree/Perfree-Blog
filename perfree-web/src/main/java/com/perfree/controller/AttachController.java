@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "附件接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/attach")
+@RequestMapping("/api/attach")
 public class AttachController extends BaseController{
 
     @Autowired

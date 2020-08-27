@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "标签接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/tag")
+@RequestMapping("/api/tag")
 public class TagController extends BaseController{
     @Autowired
     private TagService tagService;

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = "用户接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController extends BaseController {
 
     @Autowired

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "分类接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 public class CategoryController extends BaseController{
     @Autowired
     private CategoryService categoryService;

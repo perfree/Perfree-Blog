@@ -23,7 +23,7 @@ import java.util.List;
 @Api(tags = "配置接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/option")
+@RequestMapping("/api/option")
 public class OptionController {
 
     @Autowired

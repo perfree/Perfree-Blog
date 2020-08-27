@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "角色处理接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/role")
+@RequestMapping("/api/role")
 public class RoleController extends BaseController {
     @Autowired
     private RoleService roleService;

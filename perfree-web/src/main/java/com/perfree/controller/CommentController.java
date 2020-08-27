@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "评论接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/comment")
+@RequestMapping("/api/comment")
 public class CommentController {
 
     @Autowired

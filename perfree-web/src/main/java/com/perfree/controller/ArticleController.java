@@ -17,7 +17,7 @@ import java.util.Objects;
 @Api(tags = "文章接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/article")
+@RequestMapping("/api/article")
 @Validated
 public class ArticleController extends BaseController{
 

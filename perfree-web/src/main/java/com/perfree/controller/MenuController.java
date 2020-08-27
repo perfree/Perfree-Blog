@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "菜单接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/menu")
+@RequestMapping("/api/menu")
 public class MenuController extends BaseController {
 
     @Autowired

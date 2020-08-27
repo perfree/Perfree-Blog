@@ -18,7 +18,7 @@ import java.util.Map;
 @Api(tags = "上传文件处理接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/upload")
+@RequestMapping("/api/upload")
 public class UploadController extends BaseController {
     @Value("${upload.imgPath}")
     private String uploadImgPath;

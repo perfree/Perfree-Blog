@@ -26,9 +26,9 @@ spring:
       max-file-size: 30MB
       max-request-size: 30MB
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/perfreeblog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: perfree
-    password: 215607..
+    url: jdbc:mysql://47.103.8.219:60666/perfreeblog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: Yin741223257..
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       initial-size: 5

@@ -33,7 +33,7 @@ public class SystemController extends BaseController {
     private MenuService menuService;
 
     @ApiOperation(value = "登录接口", notes = "传入用户名及密码，返回token")
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     @ResponseBody
     public ResponseBean login(@RequestBody User user) {
         User userBean = userService.getUserByAccount(user.getAccount());
@@ -60,7 +60,7 @@ public class SystemController extends BaseController {
     }
 
     @ApiOperation(value = "获取用户信息", notes = "获取当前登录的用户信息")
-    @GetMapping("/getUserInfo")
+    @GetMapping("/api/getUserInfo")
     @ResponseBody
     public ResponseBean getUserInfo(HttpServletRequest request){
         User user = getUser(request);
@@ -71,7 +71,7 @@ public class SystemController extends BaseController {
     }
 
     @ApiOperation(value = "获取用户后台菜单信息", notes = "获取当前登录的用户所拥有的后台菜单信息")
-    @GetMapping("/getAdminMenuByAccount")
+    @GetMapping("/api/getAdminMenuByAccount")
     @ResponseBody
     public ResponseBean getAdminMenuByAccount(HttpServletRequest request){
         User user = getUser(request);
@@ -80,7 +80,7 @@ public class SystemController extends BaseController {
     }
 
     @ApiOperation(value = "获取用户前台菜单信息", notes = "获取当前登录的用户所拥有的前台菜单信息")
-    @GetMapping("/getPortalMenuByAccount")
+    @GetMapping("/api/getPortalMenuByAccount")
     @ResponseBody
     public ResponseBean getPortalMenuByAccount(HttpServletRequest request){
         User user = getUser(request);
