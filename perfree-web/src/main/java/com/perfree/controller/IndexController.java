@@ -14,7 +14,7 @@ public class IndexController implements ErrorController {
     @RequestMapping("/")
     public String index()
     {
-        return "index.html";
+        return "front/index.html";
     }
 
     @Override
@@ -33,8 +33,12 @@ public class IndexController implements ErrorController {
         System.out.println(path);
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
        if(statusCode == 404){
-            //对应的是/error/404.html、/error/404.jsp等，文件位于/templates下面
-            return "index.html";
+           if (path.startsWith("/admin")) {
+               return "admin/index.html";
+           } else {
+               return "front/index.html";
+           }
+
         }
         return null;
     }
